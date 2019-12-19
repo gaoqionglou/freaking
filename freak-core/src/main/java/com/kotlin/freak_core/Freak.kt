@@ -1,5 +1,6 @@
 package com.kotlin.freak_core
 
+import android.app.Application
 import android.content.Context
 import java.util.*
 
@@ -11,8 +12,13 @@ class Freak {
             return Configurator
         }
 
-        private fun getConfigurations(): WeakHashMap<String, Any> {
+        private fun getConfigurations():  HashMap<String, Any> {
             return Configurator.FREAK_CONFIGS
+        }
+
+          fun getApplication(): Context {
+            return getConfigurations()[ConfigType.APPLIICATION_CONTEXT.name] as Context
+
         }
     }
 

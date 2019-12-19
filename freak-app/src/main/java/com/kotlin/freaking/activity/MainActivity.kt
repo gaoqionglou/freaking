@@ -1,15 +1,12 @@
 package com.kotlin.freaking.activity
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.snackbar.Snackbar
-import com.kotlin.freaking.R
+import com.kotlin.freaking.MainDelegate
+import com.kotlin.freaking.delegates.FreakDelegate
 
-class MainActivity : AppCompatActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+class MainActivity : ProxyActivity() {
+    override fun setRootDelegate(): FreakDelegate {
+        return MainDelegate()
     }
+
 
 }

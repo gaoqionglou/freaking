@@ -1,14 +1,16 @@
 import com.joanzapata.iconify.Icon
 import com.joanzapata.iconify.IconFontDescriptor
+import com.kotlin.freak_ec.icon.EcIcons
 
 class FontEcModule : IconFontDescriptor {
     override fun ttfFileName(): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
         return "iconfont.ttf"
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun characters(): Array<Icon> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return EcIcons.values() as Array<Icon>
     }
 
 }

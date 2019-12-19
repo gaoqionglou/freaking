@@ -1,5 +1,6 @@
 package com.kotlin.freaking
 
+import FontEcModule
 import android.app.Application
 import android.util.Log
 import com.joanzapata.iconify.fonts.FontAwesomeModule
@@ -15,6 +16,7 @@ class FreakApp : Application() {
         super.onCreate()
         Freak.init(this)
             .withApiHost("https://127.0.0.1/")
+            .withIcon(FontEcModule())
             .withIcon(FontAwesomeModule())
             .configure()
     }

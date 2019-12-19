@@ -11,7 +11,7 @@ object Configurator {
         print("Configurator init")
     }
 
-    val FREAK_CONFIGS: WeakHashMap<String, Any> = WeakHashMap()
+    val FREAK_CONFIGS:  HashMap<String, Any> = HashMap()
     val ICONS = ArrayList<IconFontDescriptor>()
 
     fun configure() {
