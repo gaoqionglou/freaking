@@ -27,4 +27,5 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     annotationProcessor project(':freak-complier')
     api project(':freak-ec')
+
 }
