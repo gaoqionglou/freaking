@@ -1,11 +1,11 @@
-package com.kotlin.freaking.activity
+package com.kotlin.freak_core.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.annotation.RestrictTo
 import androidx.appcompat.widget.ContentFrameLayout
-import com.kotlin.freaking.R
-import com.kotlin.freaking.delegates.FreakDelegate
+import com.kotlin.freak_core.R
+
+import com.kotlin.freak_core.delegates.FreakDelegate
 import me.yokeyword.fragmentation.SupportActivity
 
 

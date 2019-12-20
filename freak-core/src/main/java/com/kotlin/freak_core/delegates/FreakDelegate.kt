@@ -1,4 +1,4 @@
-package com.kotlin.freaking.delegates
+package com.kotlin.freak_core.delegates
 
 abstract class FreakDelegate : PermissionCheckerDelegate(){
 

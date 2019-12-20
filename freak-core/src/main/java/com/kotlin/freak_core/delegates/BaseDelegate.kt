@@ -1,4 +1,4 @@
-package com.kotlin.freaking.delegates
+package com.kotlin.freak_core.delegates
 
 import android.os.Bundle
 import android.view.LayoutInflater
