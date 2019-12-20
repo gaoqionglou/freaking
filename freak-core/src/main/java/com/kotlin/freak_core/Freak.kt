@@ -12,7 +12,7 @@ class Freak {
             return Configurator
         }
 
-        private fun getConfigurations():  HashMap<String, Any> {
+        fun getConfigurations(): HashMap<String, Any> {
             return Configurator.FREAK_CONFIGS
         }
 
