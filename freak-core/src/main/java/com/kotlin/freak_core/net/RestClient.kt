@@ -1,40 +1,29 @@
 package com.kotlin.freak_core.net
 
-import com.kotlin.freak_core.net.callback.IError
-import com.kotlin.freak_core.net.callback.IRequest
-import com.kotlin.freak_core.net.callback.ISuccess
+import com.kotlin.freak_core.net.callback.*
+
 import okhttp3.RequestBody
+import retrofit2.Call
 import java.util.*
 
-class RestClient {
-    private val URL: String?
-    private var PARAMS: Map<String, Any> = RestCreator.ParamsHolder.PARAMS as
-            private
-    val ISUCCESS: ISuccess?
-    private val IERROR: IError?
-    private val IREQUEST: IRequest?
+class RestClient(
+    private val URL: String?,
+    private val params: WeakHashMap<String, Any>,
+    private val SUCCESS: ISuccess?,
+    private val ERROR: IError?,
+    private val REQUEST: IRequest?,
+    private val FAIL: IFail?,
     private val BODY: RequestBody?
+) {
 
-    constructor(
-        URL: String?,
-        params: WeakHashMap<String, Any>?,
-        ISUCCESS: ISuccess?,
-        IERROR: IError?,
-        IREQUEST: IRequest?,
-        BODY: RequestBody?
-    ) {
-        this.URL = URL
-        params?.let {
+    private var PARAMS: WeakHashMap<String, Any> = RestCreator.ParamsHolder.PARAMS
+
+    init {
+
             params.forEach {
-                var str = it.key
-                var strr =
-                    PARAMS.apply { }
+                PARAMS[it.key] = it.value
             }
-        }
-        this.ISUCCESS = ISUCCESS
-        this.IERROR = IERROR
-        this.IREQUEST = IREQUEST
-        this.BODY = BODY
+
     }
 
 
@@ -43,4 +32,45 @@ class RestClient {
             return RestClientBuilder()
         }
     }
+
+
+    fun request(method: HttpMethod) {
+        val service: RestService = RestCreator.getRestService()
+        var call: Call<String>? = null
+        REQUEST?.let {
+            REQUEST.onRequestStart()
+        }
+        when (method.name) {
+            HttpMethod.GET.name -> call = service.get(URL, PARAMS)
+            HttpMethod.POST.name -> call = service.post(URL, PARAMS)
+            HttpMethod.PUT.name -> call = service.put(URL, PARAMS)
+            HttpMethod.DELETE.name -> call = service.delete(URL, PARAMS)
+        }
+
+        call?.let {
+            it.enqueue(getRequestCallback())
+        }
+    }
+
+    private fun getRequestCallback(): RequestCallbacks {
+        return RequestCallbacks(SUCCESS, ERROR, REQUEST, FAIL)
+    }
+
+    fun get() {
+        request(HttpMethod.GET)
+
+    }
+
+    fun post() {
+        request(HttpMethod.POST)
+    }
+
+    fun put() {
+        request(HttpMethod.PUT)
+    }
+
+    fun delete() {
+        request(HttpMethod.DELETE)
+    }
+
 }

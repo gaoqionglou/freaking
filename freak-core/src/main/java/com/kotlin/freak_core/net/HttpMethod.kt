@@ -1,6 +1,6 @@
 package com.kotlin.freak_core.net
 
-enum class HttpMethod {
+public enum class HttpMethod {
     GET,
     POST,
     POST_RAW,

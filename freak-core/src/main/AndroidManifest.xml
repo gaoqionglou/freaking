@@ -1,1 +1,7 @@
-<manifest package="com.kotlin.freak_core" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+    package="com.kotlin.freak_core">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+</manifest>

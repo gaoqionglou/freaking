@@ -15,11 +15,15 @@ class RestCreator {
     fun getRestService():RestService{
         return RestServiceHolder.REST_SERVICE
     }
+
+        fun getParams(): WeakHashMap<String, Any> {
+            return ParamsHolder.PARAMS
+        }
     }
 
 
     object ParamsHolder{
-        var PARAMS :WeakHashMap<String,Any> = WeakHashMap()
+        val PARAMS: WeakHashMap<String, Any> = WeakHashMap()
     }
 
     object RetrofitHolder{

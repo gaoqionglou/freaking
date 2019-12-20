@@ -4,12 +4,13 @@ import com.kotlin.freak_core.net.callback.IError
 import com.kotlin.freak_core.net.callback.IFail
 import com.kotlin.freak_core.net.callback.IRequest
 import com.kotlin.freak_core.net.callback.ISuccess
+import okhttp3.MediaType
 import okhttp3.RequestBody
 import java.util.*
 
 class RestClientBuilder {
     private var mUrl: String? = null
-    private var mParams: WeakHashMap<String, Any>? = null
+    private val PARAMS: WeakHashMap<String, Any> = RestCreator.getParams()
     private var mISuccess: ISuccess? = null
     private var mIError: IError? = null
     private var mIFail: IFail? = null
@@ -27,7 +28,11 @@ class RestClientBuilder {
         mBody: RequestBody?
     ) {
         this.mUrl = mUrl
-        this.mParams = mParams
+        mParams?.let {
+            mParams.forEach {
+                PARAMS[it.key] = it.value
+            }
+        }
         this.mISuccess = mISuccess
         this.mIError = mIError
         this.mIFail = mIFail
@@ -42,15 +47,16 @@ class RestClientBuilder {
     }
 
     fun params(params: WeakHashMap<String, Any>): RestClientBuilder {
-        this.mParams = params
+        params.forEach {
+            PARAMS[it.key] = it.value
+
+        }
         return this
     }
 
     fun params(key: String, value: Any): RestClientBuilder {
-        if (mParams == null) {
-            mParams = WeakHashMap<String, Any>()
-        }
-        mParams?.let { it[key] = value }
+
+        PARAMS[key] = value
         return this
     }
 
@@ -80,6 +86,6 @@ class RestClientBuilder {
     }
 
     fun build(): RestClient {
-        return RestClient(mUrl, mParams, mISuccess, mIError, mIRequest, mBody)
+        return RestClient(mUrl, PARAMS, mISuccess, mIError, mIRequest, mIFail, mBody)
     }
 }
