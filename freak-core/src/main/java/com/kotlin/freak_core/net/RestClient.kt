@@ -1,6 +1,9 @@
 package com.kotlin.freak_core.net
 
+import android.content.Context
 import com.kotlin.freak_core.net.callback.*
+import com.kotlin.freak_core.ui.FreakLoader
+import com.kotlin.freak_core.ui.LoaderStyle
 
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -13,7 +16,9 @@ class RestClient(
     private val ERROR: IError?,
     private val REQUEST: IRequest?,
     private val FAIL: IFail?,
-    private val BODY: RequestBody?
+    private val BODY: RequestBody?,
+    private val LOADER_STYLE: LoaderStyle?,
+    private val CONTEXT: Context?
 ) {
 
     private var PARAMS: WeakHashMap<String, Any> = RestCreator.ParamsHolder.PARAMS
@@ -40,6 +45,9 @@ class RestClient(
         REQUEST?.let {
             REQUEST.onRequestStart()
         }
+        LOADER_STYLE?.let {
+            FreakLoader.showLoading(CONTEXT, LOADER_STYLE)
+        }
         when (method.name) {
             HttpMethod.GET.name -> call = service.get(URL, PARAMS)
             HttpMethod.POST.name -> call = service.post(URL, PARAMS)
@@ -47,13 +55,11 @@ class RestClient(
             HttpMethod.DELETE.name -> call = service.delete(URL, PARAMS)
         }
 
-        call?.let {
-            it.enqueue(getRequestCallback())
-        }
+        call?.enqueue(getRequestCallback())
     }
 
     private fun getRequestCallback(): RequestCallbacks {
-        return RequestCallbacks(SUCCESS, ERROR, REQUEST, FAIL)
+        return RequestCallbacks(SUCCESS, ERROR, REQUEST, FAIL, LOADER_STYLE)
     }
 
     fun get() {

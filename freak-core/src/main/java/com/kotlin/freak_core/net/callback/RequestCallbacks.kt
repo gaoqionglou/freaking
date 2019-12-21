@@ -1,21 +1,28 @@
 package com.kotlin.freak_core.net.callback
 
+import android.os.Handler
+import com.kotlin.freak_core.ui.FreakLoader
+import com.kotlin.freak_core.ui.LoaderStyle
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RequestCallbacks : Callback<String> {
+class RequestCallbacks(
+    success: ISuccess?,
+    error: IError?,
+    request: IRequest?,
+    fail: IFail?,
+    loader_style: LoaderStyle?
+) : Callback<String> {
 
-    private val SUCCESS: ISuccess?
-    private val ERROR: IError?
-    private val REQUEST: IRequest?
-    private val FAIL: IFail?
+    private val SUCCESS: ISuccess? = success
+    private val ERROR: IError? = error
+    private val REQUEST: IRequest? = request
+    private val FAIL: IFail? = fail
+    private val LOADER_STYLE: LoaderStyle? = loader_style
 
-    constructor(SUCCESS: ISuccess?, ERROR: IError?, REQUEST: IRequest?, FAIL: IFail?) {
-        this.SUCCESS = SUCCESS
-        this.ERROR = ERROR
-        this.REQUEST = REQUEST
-        this.FAIL = FAIL
+    companion object {
+        var hanlder: Handler = Handler()
     }
 
 
@@ -26,6 +33,13 @@ class RequestCallbacks : Callback<String> {
 
         } else {
             ERROR?.onIError(response.code(), response.message())
+        }
+
+        LOADER_STYLE?.let {
+            hanlder.postDelayed(
+                Runnable { FreakLoader.stopLoading() },
+                1000L
+            )
         }
     }
 

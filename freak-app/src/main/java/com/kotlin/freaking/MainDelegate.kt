@@ -2,8 +2,6 @@ package com.kotlin.freaking
 
 import android.os.Bundle
 import android.view.View
-import android.widget.CheckedTextView
-import android.widget.Toast
 import com.kotlin.freak_core.delegates.FreakDelegate
 import com.kotlin.freak_core.net.RestClient
 import com.kotlin.freak_core.net.callback.IError
@@ -12,8 +10,7 @@ import com.kotlin.freak_core.net.callback.ISuccess
 
 class MainDelegate : FreakDelegate() {
     override fun onBindView(savedInstanceState: Bundle?, rootView: View) {
-        val text = rootView.findViewById<CheckedTextView>(R.id.CheckedTextView)
-
+        test()
     }
 
     override fun setLayout(): Any {
@@ -24,9 +21,10 @@ class MainDelegate : FreakDelegate() {
     fun test() {
         RestClient.builder()
             .url("https://www.busdmm.icu/star/tyv")
+            .loader(context)
             .success(object : ISuccess {
                 override fun onSuccess(response: String?) {
-                    Toast.makeText(context, response, Toast.LENGTH_LONG).show()
+//                    Toast.makeText(context, response, Toast.LENGTH_LONG).show()
                 }
 
             })

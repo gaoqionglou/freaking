@@ -1,9 +1,12 @@
 package com.kotlin.freak_core.net
 
+import android.content.Context
 import com.kotlin.freak_core.net.callback.IError
 import com.kotlin.freak_core.net.callback.IFail
 import com.kotlin.freak_core.net.callback.IRequest
 import com.kotlin.freak_core.net.callback.ISuccess
+import com.kotlin.freak_core.ui.FreakLoader
+import com.kotlin.freak_core.ui.LoaderStyle
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import java.util.*
@@ -16,7 +19,8 @@ class RestClientBuilder {
     private var mIFail: IFail? = null
     private var mIRequest: IRequest? = null
     private var mBody: RequestBody? = null
-
+    private var mLoaderStyle: LoaderStyle? = null
+    private var mContext: Context? = null
     constructor()
     constructor(
         mUrl: String?,
@@ -60,6 +64,18 @@ class RestClientBuilder {
         return this
     }
 
+    fun loader(context: Context?, loaderStyle: LoaderStyle): RestClientBuilder {
+        this.mContext = context
+        this.mLoaderStyle = loaderStyle
+        return this
+    }
+
+    fun loader(context: Context?): RestClientBuilder {
+        this.mContext = context
+        this.mLoaderStyle = FreakLoader.DEFAULT_LOADER_STYLE
+        return this
+    }
+
     fun raw(raw: String): RestClientBuilder {
         this.mBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), raw)
         return this
@@ -86,6 +102,16 @@ class RestClientBuilder {
     }
 
     fun build(): RestClient {
-        return RestClient(mUrl, PARAMS, mISuccess, mIError, mIRequest, mIFail, mBody)
+        return RestClient(
+            mUrl,
+            PARAMS,
+            mISuccess,
+            mIError,
+            mIRequest,
+            mIFail,
+            mBody,
+            mLoaderStyle,
+            mContext
+        )
     }
 }
