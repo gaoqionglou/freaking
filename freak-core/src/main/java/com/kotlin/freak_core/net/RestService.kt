@@ -1,6 +1,7 @@
 package com.kotlin.freak_core.net
 
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -14,9 +15,15 @@ interface RestService {
     @POST
     fun post(@Url url: String?, @FieldMap params: WeakHashMap<String, Any>): Call<String>
 
+    @POST
+    fun postRaw(@Url url: String?, @Body params: RequestBody?): Call<String>
+
     @FormUrlEncoded
     @PUT
     fun put(@Url url: String?, @FieldMap params: WeakHashMap<String, Any>): Call<String>
+
+    @PUT
+    fun putRaw(@Url url: String?, @Body params: RequestBody?): Call<String>
 
     @FormUrlEncoded
     @DELETE
@@ -24,7 +31,7 @@ interface RestService {
 
     @Streaming
     @GET
-    fun download(@Url url: String?, @FieldMap params: WeakHashMap<String, Any>): Call<ResponseBody>
+    fun download(@Url url: String?, @QueryMap params: WeakHashMap<String, Any>): Call<ResponseBody>
 
     @Multipart
     @POST

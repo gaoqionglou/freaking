@@ -9,6 +9,7 @@ import com.kotlin.freak_core.ui.FreakLoader
 import com.kotlin.freak_core.ui.LoaderStyle
 import okhttp3.MediaType
 import okhttp3.RequestBody
+import java.io.File
 import java.util.*
 
 class RestClientBuilder {
@@ -21,27 +22,33 @@ class RestClientBuilder {
     private var mBody: RequestBody? = null
     private var mLoaderStyle: LoaderStyle? = null
     private var mContext: Context? = null
+    private var mFile: File? = null
+    private var mDir: String? = null
+    private var mExtension: String? = null
+    private var mName: String? = null
     constructor()
     constructor(
-        mUrl: String?,
-        mParams: WeakHashMap<String, Any>?,
-        mISuccess: ISuccess?,
-        mIError: IError?,
-        mIFail: IFail?,
-        mIRequest: IRequest?,
-        mBody: RequestBody?
+        url: String?,
+        params: WeakHashMap<String, Any>?,
+        iSuccess: ISuccess?,
+        iError: IError?,
+        iFail: IFail?,
+        iRequest: IRequest?,
+        body: RequestBody?,
+        file: File?
     ) {
-        this.mUrl = mUrl
-        mParams?.let {
-            mParams.forEach {
+        this.mUrl = url
+        params?.let {
+            params.forEach {
                 PARAMS[it.key] = it.value
             }
         }
-        this.mISuccess = mISuccess
-        this.mIError = mIError
-        this.mIFail = mIFail
-        this.mIRequest = mIRequest
-        this.mBody = mBody
+        this.mISuccess = iSuccess
+        this.mIError = iError
+        this.mIFail = iFail
+        this.mIRequest = iRequest
+        this.mBody = body
+        this.mFile = file
     }
 
 
@@ -59,8 +66,32 @@ class RestClientBuilder {
     }
 
     fun params(key: String, value: Any): RestClientBuilder {
-
         PARAMS[key] = value
+        return this
+    }
+
+    fun dir(dir: String): RestClientBuilder {
+        this.mDir = dir
+        return this
+    }
+
+    fun extension(extension: String): RestClientBuilder {
+        this.mExtension = extension
+        return this
+    }
+
+    fun name(name: String): RestClientBuilder {
+        this.mName = name
+        return this
+    }
+
+    fun file(file: File?): RestClientBuilder {
+        this.mFile = file
+        return this
+    }
+
+    fun file(filePath: String?): RestClientBuilder {
+        this.mFile = File(filePath)
         return this
     }
 
@@ -110,8 +141,12 @@ class RestClientBuilder {
             mIRequest,
             mIFail,
             mBody,
+            mFile,
             mLoaderStyle,
-            mContext
+            mContext,
+            mDir,
+            mExtension,
+            mName
         )
     }
 }
