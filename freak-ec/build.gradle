@@ -1,6 +1,9 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'com.jakewharton.butterknife'
+apply plugin:'kotlin-kapt'
 android {
     compileSdkVersion 28
     buildToolsVersion "28.0.3"
@@ -35,4 +38,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     api project(':freak-core')
+
+//    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
+    //kotlin使用kapt
+    kapt  'com.jakewharton:butterknife-compiler:10.2.0'
+
 }

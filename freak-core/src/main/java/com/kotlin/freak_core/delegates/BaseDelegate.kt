@@ -1,5 +1,6 @@
 package com.kotlin.freak_core.delegates
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -36,6 +37,10 @@ abstract class BaseDelegate : SwipeBackFragment() {
         return rootView
     }
 
+
+    fun getProxyActivity(): Activity {
+        return _mActivity;
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -5,7 +5,7 @@ import android.view.Gravity
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatDialog
 import com.kotlin.freak_core.R
-import com.kotlin.freak_core.util.DimenUtil
+import com.kotlin.freak_core.util.dimen.DimenUtil
 
 class FreakLoader {
 
