@@ -2,8 +2,8 @@ package com.kotlin.freak_core
 
 import com.joanzapata.iconify.IconFontDescriptor
 import com.joanzapata.iconify.Iconify
+import okhttp3.Interceptor
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 object Configurator {
@@ -11,22 +11,39 @@ object Configurator {
         print("Configurator init")
     }
 
-    val FREAK_CONFIGS:  HashMap<String, Any> = HashMap()
-    val ICONS = ArrayList<IconFontDescriptor>()
+    val FREAK_CONFIGS: HashMap<Any, Any> = HashMap()
+    val ICONS = mutableListOf<IconFontDescriptor>()
+    val INTERCEPTORS = mutableListOf<Interceptor>()
+
 
     fun configure() {
-        FREAK_CONFIGS[ConfigType.CONFIG_READY.name] = true
+        FREAK_CONFIGS[ConfigKey.CONFIG_READY.name] = true
         initIcons()
     }
 
     fun withApiHost(host: String): Configurator {
-        FREAK_CONFIGS[ConfigType.API_HOST.name] = host
+        FREAK_CONFIGS[ConfigKey.API_HOST.name] = host
         return this
     }
 
     fun withIcon(descriptor: IconFontDescriptor): Configurator {
         ICONS.add(descriptor)
         return this
+    }
+
+
+    fun withInterceptor(interceptor: Interceptor): Configurator {
+        INTERCEPTORS.add(interceptor)
+        FREAK_CONFIGS[ConfigKey.INTERCEPTORS] = INTERCEPTORS
+        return this
+
+    }
+
+    fun withInterceptors(interceptors: ArrayList<Interceptor>): Configurator {
+        INTERCEPTORS.addAll(interceptors)
+        FREAK_CONFIGS[ConfigKey.INTERCEPTORS] = INTERCEPTORS
+        return this
+
     }
 
     private fun initIcons() {
@@ -37,14 +54,14 @@ object Configurator {
     }
 
     fun checkConfiguration() {
-        val isReady = FREAK_CONFIGS[ConfigType.CONFIG_READY.name] as Boolean
+        val isReady = FREAK_CONFIGS[ConfigKey.CONFIG_READY.name] as Boolean
         if (isReady) {
             throw RuntimeException("Configuration not ready, call configure .")
         }
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun <T> getConfiguratioin(key: Enum<ConfigType>): T {
+    fun <T> getConfiguratioin(key: Enum<ConfigKey>): T {
         checkConfiguration()
         return FREAK_CONFIGS[key.name] as T
     }
