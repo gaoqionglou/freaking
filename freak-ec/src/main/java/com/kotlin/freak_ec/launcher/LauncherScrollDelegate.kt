@@ -1,0 +1,52 @@
+package com.kotlin.freak_ec.launcher
+
+import android.os.Bundle
+import android.util.Log
+import android.view.View
+import com.bigkoo.convenientbanner.ConvenientBanner
+import com.bigkoo.convenientbanner.listener.OnItemClickListener
+import com.kotlin.freak_core.delegates.FreakDelegate
+import com.kotlin.freak_core.util.storage.FreakPreference
+import com.kotlin.freak_ec.R
+
+class LauncherScrollDelegate : FreakDelegate(), OnItemClickListener {
+    override fun onItemClick(position: Int) {
+        if (position == INTEGERS.size - 1) {
+            FreakPreference.setAppFlag(LanucherScrollStatus.HAS_FIRST_START_APP.name, true)
+        }
+    }
+
+    private var mConvenientBanner: ConvenientBanner<Int>? = null
+    private val INTEGERS = mutableListOf<Int>()
+
+    fun initBanner() {
+        INTEGERS.add(R.mipmap.launcher_01)
+        INTEGERS.add(R.mipmap.launcher_02)
+        INTEGERS.add(R.mipmap.launcher_03)
+        INTEGERS.add(R.mipmap.launcher_04)
+        INTEGERS.add(R.mipmap.launcher_05)
+        INTEGERS.add(R.mipmap.launcher_06)
+
+        mConvenientBanner?.let {
+            it.setPages(LauncherHolderCreator(), INTEGERS)
+                .setPageIndicator(intArrayOf(R.drawable.dot_normal, R.drawable.dot_selected))
+                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)
+                .setOnItemClickListener(this)
+                .isCanLoop = true
+        }
+    }
+
+    override fun setLayout(): Any {
+        mConvenientBanner = ConvenientBanner(context)
+        return mConvenientBanner as ConvenientBanner<Int>
+    }
+
+    override fun onBindView(savedInstanceState: Bundle?, rootView: View) {
+        Log.i("Freak", "FreakPreference-" + FreakPreference.hashCode())
+        initBanner()
+    }
+
+}
+
+
+

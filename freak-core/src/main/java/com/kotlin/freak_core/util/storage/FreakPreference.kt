@@ -19,8 +19,8 @@ object FreakPreference {
         getAppPreference().edit().putBoolean(key, flag).apply()
     }
 
-    fun getAppFlag(key: String) {
-        getAppPreference().getBoolean(key, false)
+    fun getAppFlag(key: String): Boolean {
+        return getAppPreference().getBoolean(key, false)
     }
 
 }

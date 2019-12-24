@@ -6,10 +6,12 @@ import androidx.appcompat.widget.AppCompatTextView
 import butterknife.BindView
 import butterknife.OnClick
 import com.kotlin.freak_core.delegates.FreakDelegate
+import com.kotlin.freak_core.util.storage.FreakPreference
 import com.kotlin.freak_core.util.timer.BaseTimerTask
 import com.kotlin.freak_core.util.timer.ITimerListener
 import com.kotlin.freak_ec.R
 import com.kotlin.freak_ec.R2
+import me.yokeyword.fragmentation.ISupportFragment
 import java.util.*
 
 class LauncherDelegate : FreakDelegate(), ITimerListener {
@@ -61,6 +63,9 @@ class LauncherDelegate : FreakDelegate(), ITimerListener {
                 if (mCount < 0) {
                     timer?.cancel()
                     timer = null
+                    if (!FreakPreference.getAppFlag(LanucherScrollStatus.HAS_FIRST_START_APP.name)) {
+                        start(LauncherScrollDelegate(), ISupportFragment.SINGLETASK)
+                    }
                 }
             }
 
