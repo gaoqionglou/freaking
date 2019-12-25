@@ -8,11 +8,13 @@ import com.bigkoo.convenientbanner.listener.OnItemClickListener
 import com.kotlin.freak_core.delegates.FreakDelegate
 import com.kotlin.freak_core.util.storage.FreakPreference
 import com.kotlin.freak_ec.R
+import com.kotlin.freak_ec.sign.SignInDelegate
 
 class LauncherScrollDelegate : FreakDelegate(), OnItemClickListener {
     override fun onItemClick(position: Int) {
         if (position == INTEGERS.size - 1) {
             FreakPreference.setAppFlag(LanucherScrollStatus.HAS_FIRST_START_APP.name, true)
+            start(SignInDelegate())
         }
     }
 

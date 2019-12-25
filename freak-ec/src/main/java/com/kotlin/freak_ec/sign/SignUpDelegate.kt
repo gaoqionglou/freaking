@@ -87,7 +87,7 @@ class SignUpDelegate : FreakDelegate() {
     }
 
     override fun setLayout(): Any {
-        return R.layout.delegate_sign_up;
+        return R.layout.delegate_sign_up
     }
 
     override fun onBindView(savedInstanceState: Bundle?, rootView: View) {

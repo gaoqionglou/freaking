@@ -4,6 +4,9 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'com.jakewharton.butterknife'
 apply plugin:'kotlin-kapt'
+
+apply plugin: 'org.greenrobot.greendao'
+
 android {
     compileSdkVersion 28
     buildToolsVersion "28.0.3"
@@ -25,6 +28,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+/*    greendao {
+        schemaVersion 1 //数据库版本号
+        daoPackage 'com.aserbao.aserbaosandroid.functions.database.greenDao.db'
+       // 设置DaoMaster、DaoSession、Dao 包名
+        targetGenDir 'src/main/java'//设置DaoMaster、DaoSession、Dao目录,请注意，这里路径用/不要用.
+        generateTests false //设置为true以自动生成单元测试。
+        targetGenDirTests 'src/main/java' //应存储生成的单元测试的基本目录。默认为 src / androidTest / java。
+    }*/
+
 
 }
 
@@ -42,7 +54,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     api project(':freak-core')
-
+    implementation 'org.greenrobot:greendao:3.2.2'
 //    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
     //kotlin使用kapt
     kapt  'com.jakewharton:butterknife-compiler:10.2.0'

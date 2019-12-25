@@ -2,7 +2,6 @@ package com.kotlin.freak_ec.launcher
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.widget.AppCompatTextView
 import butterknife.BindView
 import butterknife.OnClick
@@ -33,15 +32,11 @@ class LauncherDelegate : FreakDelegate(), ITimerListener {
 
 
     private fun initTimer() {
-        try {
 
+        timer = Timer()
+        val timerTask = BaseTimerTask(this)
+        timer?.schedule(timerTask, 0, 1000)
 
-            timer = Timer()
-            val timerTask = BaseTimerTask(this)
-            timer?.schedule(timerTask, 0, 1000)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
     }
 
     override fun setLayout(): Any {
@@ -65,20 +60,16 @@ class LauncherDelegate : FreakDelegate(), ITimerListener {
         }*/
         getProxyActivity().runOnUiThread(object : Runnable {
             override fun run() {
-                try {
-                    Toast.makeText(context, "跳过 $mCount 秒", Toast.LENGTH_LONG).show()
-                    mTvTimer?.text = "跳过\n$mCount 秒"
-                    mCount--
-                    if (mCount <= 0) {
-                        timer?.cancel()
-                        timer = null
-                        if (!FreakPreference.getAppFlag(LanucherScrollStatus.HAS_FIRST_START_APP.name)) {
-                            start(LauncherScrollDelegate(), ISupportFragment.SINGLETASK)
-                        }
+                mTvTimer?.text = "跳过\n$mCount 秒"
+                mCount--
+                if (mCount <= 0) {
+                    timer?.cancel()
+                    timer = null
+                    if (!FreakPreference.getAppFlag(LanucherScrollStatus.HAS_FIRST_START_APP.name) || true) {
+                        start(LauncherScrollDelegate(), ISupportFragment.SINGLETASK)
                     }
-                } catch (e: Exception) {
-                    e.printStackTrace()
                 }
+
             }
 
         })
