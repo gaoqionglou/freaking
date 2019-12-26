@@ -1,2 +1,2 @@
-include ':freak-app', ':freak-annations', ':freak-complier', ':freak-core', ':freak-ec'
+include ':freak-app', ':freak-annotation', ':freak-complier', ':freak-core', ':freak-ec'
 rootProject.name='freaking'
