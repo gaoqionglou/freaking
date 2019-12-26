@@ -37,7 +37,10 @@ android {
         targetGenDirTests 'src/main/java' //应存储生成的单元测试的基本目录。默认为 src / androidTest / java。
     }*/
 
-
+//  解决kotlin中使用报错：Unresolved reference: DaoSession
+    greendao {
+        targetGenDir 'src/main/java'
+    }
 }
 
 dependencies {

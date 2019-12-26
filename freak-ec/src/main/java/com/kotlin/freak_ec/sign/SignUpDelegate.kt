@@ -11,6 +11,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.kotlin.freak_core.delegates.FreakDelegate
 import com.kotlin.freak_ec.R
 import com.kotlin.freak_ec.R2
+import com.kotlin.freak_ec.database.bean.UserProfile
 
 
 class SignUpDelegate : FreakDelegate() {
@@ -61,7 +62,7 @@ class SignUpDelegate : FreakDelegate() {
             signUpEdEmail?.error = null
         }
 
-        if (phone.isEmpty() || !Patterns.IP_ADDRESS.matcher(phone).matches()) {
+        if (phone.isEmpty() || !Patterns.PHONE.matcher(phone).matches()) {
             signUpEdPhone?.error = "错误手机格式"
             isPass = false
         } else {
@@ -75,7 +76,7 @@ class SignUpDelegate : FreakDelegate() {
             signUpEdPassword?.error = null
         }
 
-        if (repeatPassword.isEmpty() || repeatPassword.length < 6 || repeatPassword.equals(password)) {
+        if (repeatPassword.isEmpty() || repeatPassword.length < 6 || !repeatPassword.equals(password)) {
             signUpEdRepeatPassword?.error = "密码验证错误"
             isPass = false
         } else {
@@ -98,7 +99,15 @@ class SignUpDelegate : FreakDelegate() {
     @OnClick(R2.id.delegate_sign_up_btn_sign_up)
     fun onSignUpClick() {
         if (checkForm()) {
-
+            val userProfile = UserProfile()
+            val name = signUpEdName?.text?.trim().toString()
+            val email = signUpEdEmail?.text?.trim().toString()
+            val phone = signUpEdPhone?.text?.trim().toString()
+            val password = signUpEdPassword?.text?.trim().toString()
+            userProfile.email = email
+            userProfile.name = name
+            userProfile.password = password
+            SignUpHandler.signUp(userProfile)
         }
     }
 

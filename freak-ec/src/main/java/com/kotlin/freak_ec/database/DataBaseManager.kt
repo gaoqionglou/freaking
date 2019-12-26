@@ -6,6 +6,7 @@ object DataBaseManager {
     var mDaoSession: DaoSession? = null
     var mUserProfileDao: UserProfileDao? = null
 
+
     fun init(context: Context): DataBaseManager {
         initDao(context)
         return this
@@ -16,7 +17,7 @@ object DataBaseManager {
         val helper = ReleaseOpenHelper(context, "freak_ec.db")
         val db = helper.writableDb
         mDaoSession = DaoMaster(db).newSession()
-        mUserProfileDao = mDaoSession?.getUserProfileDao()
+        mUserProfileDao = mDaoSession?.userProfileDao
     }
 
 }
