@@ -1,5 +1,7 @@
 package com.kotlin.freak_ec.sign
 
+
+import android.app.Activity
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
@@ -8,6 +10,7 @@ import butterknife.BindView
 import butterknife.OnClick
 
 import com.google.android.material.textfield.TextInputEditText
+import com.kotlin.freak_core.app.AccountManager
 import com.kotlin.freak_core.delegates.FreakDelegate
 import com.kotlin.freak_ec.R
 import com.kotlin.freak_ec.R2
@@ -40,6 +43,14 @@ class SignUpDelegate : FreakDelegate() {
     @JvmField
     var signUpBtn: AppCompatButton? = null
 
+    var iSignLIstener: ISignLIstener? = null
+
+    override fun onAttach(activity: Activity?) {
+        super.onAttach(activity)
+        if (activity is ISignLIstener) {
+            iSignLIstener = activity
+        }
+    }
 
     fun checkForm(): Boolean {
         val name = signUpEdName?.text?.trim().toString()
@@ -107,7 +118,11 @@ class SignUpDelegate : FreakDelegate() {
             userProfile.email = email
             userProfile.name = name
             userProfile.password = password
-            SignUpHandler.signUp(userProfile)
+            SignHandler.signUp(userProfile)
+
+            AccountManager.setLoginStatus(true)
+            iSignLIstener?.onSignUpSuccess()
+
         }
     }
 

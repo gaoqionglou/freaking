@@ -2,7 +2,7 @@ package com.kotlin.freak_core.util.storage
 
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import com.kotlin.freak_core.Freak
+import com.kotlin.freak_core.app.Freak
 
 /**
  * activity.getPreference(int mode )生成activity名.xml. 用于activity内部存储

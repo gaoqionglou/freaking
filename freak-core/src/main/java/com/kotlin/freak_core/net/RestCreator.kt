@@ -1,7 +1,7 @@
 package com.kotlin.freak_core.net
 
-import com.kotlin.freak_core.ConfigKey
-import com.kotlin.freak_core.Freak
+import com.kotlin.freak_core.app.ConfigKey
+import com.kotlin.freak_core.app.Freak
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

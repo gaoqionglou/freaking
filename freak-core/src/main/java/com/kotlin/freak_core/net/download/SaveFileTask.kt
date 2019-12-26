@@ -3,7 +3,7 @@ package com.kotlin.freak_core.net.download
 import android.content.Intent
 import android.net.Uri
 import android.os.AsyncTask
-import com.kotlin.freak_core.Freak
+import com.kotlin.freak_core.app.Freak
 import com.kotlin.freak_core.net.callback.IRequest
 import com.kotlin.freak_core.net.callback.ISuccess
 import okhttp3.ResponseBody

@@ -1,11 +1,16 @@
 package com.kotlin.freak_ec.launcher
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import butterknife.BindView
 import butterknife.OnClick
+import com.kotlin.freak_core.app.AccountManager
+import com.kotlin.freak_core.app.IUserChecker
 import com.kotlin.freak_core.delegates.FreakDelegate
+import com.kotlin.freak_core.ui.launcher.ILauncherListener
+import com.kotlin.freak_core.ui.launcher.OnLaucherFinishTag
 import com.kotlin.freak_core.util.storage.FreakPreference
 import com.kotlin.freak_core.util.timer.BaseTimerTask
 import com.kotlin.freak_core.util.timer.ITimerListener
@@ -25,9 +30,19 @@ class LauncherDelegate : FreakDelegate(), ITimerListener {
     var mTvTimer: AppCompatTextView? = null
 
 
+
     @OnClick(R2.id.delegate_launcher_text)
     fun onClickTimer() {
 
+    }
+
+
+    var iLauncherListener: ILauncherListener? = null
+    override fun onAttach(activity: Activity?) {
+        super.onAttach(activity)
+        if (activity is ILauncherListener) {
+            iLauncherListener = activity
+        }
     }
 
 
@@ -65,9 +80,7 @@ class LauncherDelegate : FreakDelegate(), ITimerListener {
                 if (mCount <= 0) {
                     timer?.cancel()
                     timer = null
-                    if (!FreakPreference.getAppFlag(LanucherScrollStatus.HAS_FIRST_START_APP.name) || true) {
-                        start(LauncherScrollDelegate(), ISupportFragment.SINGLETASK)
-                    }
+                    checkIfShowScroll()
                 }
 
             }
@@ -76,4 +89,22 @@ class LauncherDelegate : FreakDelegate(), ITimerListener {
 
     }
 
+
+    fun checkIfShowScroll() {
+        if (!FreakPreference.getAppFlag(LanucherScrollStatus.HAS_FIRST_START_APP.name)) {
+            start(LauncherScrollDelegate(), ISupportFragment.SINGLETASK)
+        } else {
+            //是否登录
+            AccountManager.checkAccount(object : IUserChecker {
+                override fun onSignIn() {
+                    iLauncherListener?.onLauncherFinish(OnLaucherFinishTag.SIGNED)
+                }
+
+                override fun onNotSignIn() {
+                    iLauncherListener?.onLauncherFinish(OnLaucherFinishTag.NOTSIGNED)
+                }
+
+            })
+        }
+    }
 }

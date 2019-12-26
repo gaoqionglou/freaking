@@ -1,4 +1,4 @@
-package com.kotlin.freak_core
+package com.kotlin.freak_core.app
 
 import com.joanzapata.iconify.IconFontDescriptor
 import com.joanzapata.iconify.Iconify
@@ -34,14 +34,16 @@ object Configurator {
 
     fun withInterceptor(interceptor: Interceptor): Configurator {
         INTERCEPTORS.add(interceptor)
-        FREAK_CONFIGS[ConfigKey.INTERCEPTORS] = INTERCEPTORS
+        FREAK_CONFIGS[ConfigKey.INTERCEPTORS] =
+            INTERCEPTORS
         return this
 
     }
 
     fun withInterceptors(interceptors: ArrayList<Interceptor>): Configurator {
         INTERCEPTORS.addAll(interceptors)
-        FREAK_CONFIGS[ConfigKey.INTERCEPTORS] = INTERCEPTORS
+        FREAK_CONFIGS[ConfigKey.INTERCEPTORS] =
+            INTERCEPTORS
         return this
 
     }

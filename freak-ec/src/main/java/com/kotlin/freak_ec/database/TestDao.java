@@ -20,20 +20,11 @@ public class TestDao extends AbstractDao<Test, Long> {
 
     public static final String TABLENAME = "test";
 
-    public TestDao(DaoConfig config) {
-        super(config);
-    }
-
-
-    public TestDao(DaoConfig config, DaoSession daoSession) {
-        super(config, daoSession);
-    }
-
     /**
      * Creates the underlying database table.
      */
     public static void createTable(Database db, boolean ifNotExists) {
-        String constraint = ifNotExists ? "IF NOT EXISTS " : "";
+        String constraint = ifNotExists ? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"test\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: userId
                 "\"NAME\" TEXT," + // 1: name
@@ -42,10 +33,13 @@ public class TestDao extends AbstractDao<Test, Long> {
                 "\"EMAIL\" TEXT);"); // 4: email
     }
 
-    /** Drops the underlying database table. */
-    public static void dropTable(Database db, boolean ifExists) {
-        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"test\"";
-        db.execSQL(sql);
+
+    public TestDao(DaoConfig config) {
+        super(config);
+    }
+
+    public TestDao(DaoConfig config, DaoSession daoSession) {
+        super(config, daoSession);
     }
 
     @Override
@@ -76,6 +70,14 @@ public class TestDao extends AbstractDao<Test, Long> {
         if (email != null) {
             stmt.bindString(5, email);
         }
+    }
+
+    /**
+     * Drops the underlying database table.
+     */
+    public static void dropTable(Database db, boolean ifExists) {
+        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"test\"";
+        db.execSQL(sql);
     }
 
     @Override
@@ -126,21 +128,6 @@ public class TestDao extends AbstractDao<Test, Long> {
     }
 
     @Override
-    public void readEntity(Cursor cursor, Test entity, int offset) {
-        entity.setUserId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setGender(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setPassword(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setEmail(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-     }
-
-    @Override
-    protected final Long updateKeyAfterInsert(Test entity, long rowId) {
-        entity.setUserId(rowId);
-        return rowId;
-    }
-
-    @Override
     public Long getKey(Test entity) {
         if (entity != null) {
             return entity.getUserId();
@@ -148,10 +135,20 @@ public class TestDao extends AbstractDao<Test, Long> {
             return null;
         }
     }
-
+     
     @Override
-    public boolean hasKey(Test entity) {
-        return entity.getUserId() != null;
+    public void readEntity(Cursor cursor, Test entity, int offset) {
+        entity.setUserId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
+        entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setGender(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setPassword(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setEmail(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+     }
+    
+    @Override
+    protected final Long updateKeyAfterInsert(Test entity, long rowId) {
+        entity.setUserId(rowId);
+        return rowId;
     }
 
     /**
@@ -164,6 +161,11 @@ public class TestDao extends AbstractDao<Test, Long> {
         public final static Property Gender = new Property(2, String.class, "gender", false, "GENDER");
         public final static Property Password = new Property(3, String.class, "password", false, "PASSWORD");
         public final static Property Email = new Property(4, String.class, "email", false, "EMAIL");
+    }
+
+    @Override
+    public boolean hasKey(Test entity) {
+        return entity.getUserId() != null;
     }
 
     @Override

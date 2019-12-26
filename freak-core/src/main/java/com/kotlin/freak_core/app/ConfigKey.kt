@@ -1,4 +1,4 @@
-package com.kotlin.freak_core
+package com.kotlin.freak_core.app
 
 enum class ConfigKey {
     API_HOST,

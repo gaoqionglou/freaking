@@ -1,6 +1,6 @@
 package com.kotlin.freak_core.util.dimen
 
-import com.kotlin.freak_core.Freak
+import com.kotlin.freak_core.app.Freak
 
 class DimenUtil {
     companion object {

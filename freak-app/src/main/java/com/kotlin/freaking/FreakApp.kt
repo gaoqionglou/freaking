@@ -5,7 +5,7 @@ import android.app.Application
 import android.util.Log
 import com.facebook.stetho.Stetho
 import com.joanzapata.iconify.fonts.FontAwesomeModule
-import com.kotlin.freak_core.Freak
+import com.kotlin.freak_core.app.Freak
 import com.kotlin.freak_core.net.interceptors.DebugInterceptor
 import com.kotlin.freak_ec.database.DataBaseManager
 

@@ -1,13 +1,17 @@
 package com.kotlin.freak_ec.sign
 
+
+import android.app.Activity
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
 import butterknife.BindView
 import butterknife.OnClick
 import com.google.android.material.textfield.TextInputEditText
+import com.kotlin.freak_core.app.AccountManager
 import com.kotlin.freak_core.delegates.FreakDelegate
 import com.kotlin.freak_ec.R
 import com.kotlin.freak_ec.R2
@@ -30,6 +34,14 @@ class SignInDelegate : FreakDelegate() {
     @JvmField
     var tipsSignUp: AppCompatTextView? = null
 
+    var iSignLIstener: ISignLIstener? = null
+
+    override fun onAttach(activity: Activity?) {
+        super.onAttach(activity)
+        if (iSignLIstener is Activity) {
+            iSignLIstener = activity as ISignLIstener
+        }
+    }
 
     override fun setLayout(): Any {
         return R.layout.delegate_sign_in
@@ -63,7 +75,17 @@ class SignInDelegate : FreakDelegate() {
     @OnClick(R2.id.delegate_sign_in_btn)
     fun onSignIn() {
         if (checkForm()) {
+            val email = signInEdEmail?.text?.trim().toString()
 
+            val password = signInEdPassword?.text?.trim().toString()
+
+            val isSuccess = SignHandler.signIn(email, password)
+            if (isSuccess) {
+                iSignLIstener?.onSignUpSuccess()
+                AccountManager.setLoginStatus(true)
+            } else {
+                Toast.makeText(context, "登录失败", Toast.LENGTH_LONG).show()
+            }
         }
     }
 
