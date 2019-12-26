@@ -39,6 +39,7 @@ android {
 
 //  解决kotlin中使用报错：Unresolved reference: DaoSession
     greendao {
+        daoPackage 'com.kotlin.freak_ec.database'
         targetGenDir 'src/main/java'
     }
 }

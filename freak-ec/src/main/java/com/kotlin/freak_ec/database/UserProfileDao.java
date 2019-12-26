@@ -20,20 +20,11 @@ public class UserProfileDao extends AbstractDao<UserProfile, Long> {
 
     public static final String TABLENAME = "user_profile";
 
-    public UserProfileDao(DaoConfig config) {
-        super(config);
-    }
-
-
-    public UserProfileDao(DaoConfig config, DaoSession daoSession) {
-        super(config, daoSession);
-    }
-
     /**
      * Creates the underlying database table.
      */
     public static void createTable(Database db, boolean ifNotExists) {
-        String constraint = ifNotExists ? "IF NOT EXISTS " : "";
+        String constraint = ifNotExists ? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"user_profile\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: userId
                 "\"NAME\" TEXT," + // 1: name
@@ -42,9 +33,16 @@ public class UserProfileDao extends AbstractDao<UserProfile, Long> {
                 "\"EMAIL\" TEXT);"); // 4: email
     }
 
-    /**
-     * Drops the underlying database table.
-     */
+
+    public UserProfileDao(DaoConfig config) {
+        super(config);
+    }
+
+    public UserProfileDao(DaoConfig config, DaoSession daoSession) {
+        super(config, daoSession);
+    }
+
+    /** Drops the underlying database table. */
     public static void dropTable(Database db, boolean ifExists) {
         String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"user_profile\"";
         db.execSQL(sql);
@@ -134,14 +132,8 @@ public class UserProfileDao extends AbstractDao<UserProfile, Long> {
         entity.setGender(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setPassword(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setEmail(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-    }
-
-    @Override
-    protected final Long updateKeyAfterInsert(UserProfile entity, long rowId) {
-        entity.setUserId(rowId);
-        return rowId;
-    }
-
+     }
+     
     @Override
     public Long getKey(UserProfile entity) {
         if (entity != null) {
@@ -152,13 +144,9 @@ public class UserProfileDao extends AbstractDao<UserProfile, Long> {
     }
 
     @Override
-    public boolean hasKey(UserProfile entity) {
-        return entity.getUserId() != null;
-    }
-
-    @Override
-    protected final boolean isEntityUpdateable() {
-        return true;
+    protected final Long updateKeyAfterInsert(UserProfile entity, long rowId) {
+        entity.setUserId(rowId);
+        return rowId;
     }
 
     /**
@@ -173,4 +161,14 @@ public class UserProfileDao extends AbstractDao<UserProfile, Long> {
         public final static Property Email = new Property(4, String.class, "email", false, "EMAIL");
     }
 
+    @Override
+    public boolean hasKey(UserProfile entity) {
+        return entity.getUserId() != null;
+    }
+
+    @Override
+    protected final boolean isEntityUpdateable() {
+        return true;
+    }
+    
 }
