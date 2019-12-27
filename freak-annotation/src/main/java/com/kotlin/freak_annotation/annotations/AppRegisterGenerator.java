@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 public @interface AppRegisterGenerator {
     String packageName();
 
-    Class<?> registerTemplete();
+    Class<?> registerTemplate();
 
 }
 

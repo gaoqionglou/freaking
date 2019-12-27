@@ -10,14 +10,15 @@ import javax.annotation.processing.Filer;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.SimpleAnnotationValueVisitor6;
+import javax.lang.model.util.SimpleAnnotationValueVisitor7;
 
-public class PayEntryVisitor extends SimpleAnnotationValueVisitor6<Void, Void> {
+public class PayEntryVisitor extends SimpleAnnotationValueVisitor7<Void, Void> {
     private Filer mFiler = null;
     private TypeMirror mTypeMirror = null;
     private String mPackageName = null;
 
     public void setFiler(Filer filer) {
-        this.mFiler = mFiler;
+        this.mFiler = filer;
     }
 
     @Override
@@ -29,6 +30,7 @@ public class PayEntryVisitor extends SimpleAnnotationValueVisitor6<Void, Void> {
     @Override
     public Void visitType(TypeMirror typeMirror, Void p) {
         mTypeMirror = typeMirror;
+        generateJavaCode();
         return p;
     }
 

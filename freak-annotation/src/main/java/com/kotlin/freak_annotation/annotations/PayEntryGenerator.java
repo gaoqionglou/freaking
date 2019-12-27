@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 public @interface PayEntryGenerator {
     String packageName();
 
-    Class<?> payEntryTemplete();
+    Class<?> payEntryTemplate();
 
 }
 

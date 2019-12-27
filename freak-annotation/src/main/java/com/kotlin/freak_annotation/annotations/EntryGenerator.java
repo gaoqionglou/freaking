@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 public @interface EntryGenerator {
     String packageName();
 
-    Class<?> entryTemplete();
+    Class<?> entryTemplate();
 
 }
 
