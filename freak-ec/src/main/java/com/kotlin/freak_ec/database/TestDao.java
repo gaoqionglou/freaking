@@ -20,6 +20,15 @@ public class TestDao extends AbstractDao<Test, Long> {
 
     public static final String TABLENAME = "test";
 
+    public TestDao(DaoConfig config) {
+        super(config);
+    }
+
+
+    public TestDao(DaoConfig config, DaoSession daoSession) {
+        super(config, daoSession);
+    }
+
     /**
      * Creates the underlying database table.
      */
@@ -33,13 +42,12 @@ public class TestDao extends AbstractDao<Test, Long> {
                 "\"EMAIL\" TEXT);"); // 4: email
     }
 
-
-    public TestDao(DaoConfig config) {
-        super(config);
-    }
-
-    public TestDao(DaoConfig config, DaoSession daoSession) {
-        super(config, daoSession);
+    /**
+     * Drops the underlying database table.
+     */
+    public static void dropTable(Database db, boolean ifExists) {
+        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"test\"";
+        db.execSQL(sql);
     }
 
     @Override
@@ -70,14 +78,6 @@ public class TestDao extends AbstractDao<Test, Long> {
         if (email != null) {
             stmt.bindString(5, email);
         }
-    }
-
-    /**
-     * Drops the underlying database table.
-     */
-    public static void dropTable(Database db, boolean ifExists) {
-        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"test\"";
-        db.execSQL(sql);
     }
 
     @Override
@@ -129,7 +129,7 @@ public class TestDao extends AbstractDao<Test, Long> {
 
     @Override
     public Long getKey(Test entity) {
-        if (entity != null) {
+        if(entity != null) {
             return entity.getUserId();
         } else {
             return null;
@@ -150,7 +150,7 @@ public class TestDao extends AbstractDao<Test, Long> {
         entity.setUserId(rowId);
         return rowId;
     }
-
+    
     /**
      * Properties of entity Test.<br/>
      * Can be used for QueryBuilder and for referencing column names.

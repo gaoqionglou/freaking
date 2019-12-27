@@ -20,15 +20,6 @@ public class UserProfileDao extends AbstractDao<UserProfile, Long> {
 
     public static final String TABLENAME = "user_profile";
 
-    public UserProfileDao(DaoConfig config) {
-        super(config);
-    }
-
-
-    public UserProfileDao(DaoConfig config, DaoSession daoSession) {
-        super(config, daoSession);
-    }
-
     /**
      * Creates the underlying database table.
      */
@@ -40,6 +31,23 @@ public class UserProfileDao extends AbstractDao<UserProfile, Long> {
                 "\"GENDER\" TEXT," + // 2: gender
                 "\"PASSWORD\" TEXT," + // 3: password
                 "\"EMAIL\" TEXT);"); // 4: email
+    }
+
+
+    public UserProfileDao(DaoConfig config) {
+        super(config);
+    }
+
+    public UserProfileDao(DaoConfig config, DaoSession daoSession) {
+        super(config, daoSession);
+    }
+
+    /**
+     * Drops the underlying database table.
+     */
+    public static void dropTable(Database db, boolean ifExists) {
+        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"user_profile\"";
+        db.execSQL(sql);
     }
 
     @Override
@@ -70,14 +78,6 @@ public class UserProfileDao extends AbstractDao<UserProfile, Long> {
         if (email != null) {
             stmt.bindString(5, email);
         }
-    }
-
-    /**
-     * Drops the underlying database table.
-     */
-    public static void dropTable(Database db, boolean ifExists) {
-        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"user_profile\"";
-        db.execSQL(sql);
     }
 
     @Override
@@ -141,16 +141,7 @@ public class UserProfileDao extends AbstractDao<UserProfile, Long> {
         entity.setPassword(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setEmail(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
      }
-    
-    @Override
-    public Long getKey(UserProfile entity) {
-        if(entity != null) {
-            return entity.getUserId();
-        } else {
-            return null;
-        }
-    }
-    
+
     /**
      * Properties of entity UserProfile.<br/>
      * Can be used for QueryBuilder and for referencing column names.
@@ -161,6 +152,15 @@ public class UserProfileDao extends AbstractDao<UserProfile, Long> {
         public final static Property Gender = new Property(2, String.class, "gender", false, "GENDER");
         public final static Property Password = new Property(3, String.class, "password", false, "PASSWORD");
         public final static Property Email = new Property(4, String.class, "email", false, "EMAIL");
+    }
+
+    @Override
+    public Long getKey(UserProfile entity) {
+        if (entity != null) {
+            return entity.getUserId();
+        } else {
+            return null;
+        }
     }
 
     @Override
