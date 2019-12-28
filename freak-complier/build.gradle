@@ -4,7 +4,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':freak-annotation')
     implementation 'com.squareup:javapoet:1.10.0'
-    implementation
+    implementation 'com.google.auto.service:auto-service:+'
     //must add
     annotationProcessor  'com.google.auto.service:auto-service:+'
     implementation 'com.google.auto:auto-common:0.10'
