@@ -1,8 +1,8 @@
 package com.kotlin.freak_core.net.callback
 
 import android.os.Handler
-import com.kotlin.freak_core.ui.FreakLoader
-import com.kotlin.freak_core.ui.LoaderStyle
+import com.kotlin.freak_core.ui.loader.FreakLoader
+import com.kotlin.freak_core.ui.loader.LoaderStyle
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

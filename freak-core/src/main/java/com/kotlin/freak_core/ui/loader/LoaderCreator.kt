@@ -1,4 +1,4 @@
-package com.kotlin.freak_core.ui
+package com.kotlin.freak_core.ui.loader
 
 import android.content.Context
 import com.wang.avi.AVLoadingIndicatorView
@@ -12,7 +12,8 @@ class LoaderCreator {
         fun create(type: String, context: Context?): AVLoadingIndicatorView {
             val avLoadingIndicatorView = AVLoadingIndicatorView(context)
             if (LOADING_MAP[type] == null) {
-                val indicator = getIndicator(type)
+                val indicator =
+                    getIndicator(type)
                 LOADING_MAP[type] = indicator
 
             }

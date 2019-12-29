@@ -3,8 +3,8 @@ package com.kotlin.freak_core.net
 import android.content.Context
 import com.kotlin.freak_core.net.callback.*
 import com.kotlin.freak_core.net.download.DownloadHandler
-import com.kotlin.freak_core.ui.FreakLoader
-import com.kotlin.freak_core.ui.LoaderStyle
+import com.kotlin.freak_core.ui.loader.FreakLoader
+import com.kotlin.freak_core.ui.loader.LoaderStyle
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

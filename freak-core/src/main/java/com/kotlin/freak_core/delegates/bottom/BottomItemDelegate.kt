@@ -8,8 +8,8 @@ import com.kotlin.freak_core.delegates.FreakDelegate
 
 
 abstract class BottomItemDelegate : FreakDelegate(), View.OnKeyListener {
-    private var mExitTime = 0
-    private val EXIT_TIME = 2000
+    private var mExitTime = 0L
+    private val EXIT_TIME = 2000L
 
 
     override fun onResume() {
@@ -27,10 +27,11 @@ abstract class BottomItemDelegate : FreakDelegate(), View.OnKeyListener {
             if (System.currentTimeMillis() - mExitTime > EXIT_TIME) {
                 Toast.makeText(context, "双击退出" + getString(R.string.app_name), Toast.LENGTH_LONG)
                     .show()
+                mExitTime = System.currentTimeMillis()
             } else {
                 _mActivity.finish()
-                if (mExitTime != 0) {
-                    mExitTime = 0
+                if (mExitTime != 0L) {
+                    mExitTime = 0L
                 }
             }
             //消化掉这个事件

@@ -30,10 +30,9 @@ class LauncherDelegate : FreakDelegate(), ITimerListener {
     var mTvTimer: AppCompatTextView? = null
 
 
-
     @OnClick(R2.id.delegate_launcher_text)
     fun onClickTimer() {
-
+        checkIfShowScroll()
     }
 
 

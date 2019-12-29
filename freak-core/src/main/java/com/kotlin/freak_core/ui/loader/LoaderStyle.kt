@@ -1,4 +1,4 @@
-package com.kotlin.freak_core.ui
+package com.kotlin.freak_core.ui.loader
 
 @Suppress("unused")
 enum class LoaderStyle {

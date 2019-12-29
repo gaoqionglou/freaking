@@ -5,8 +5,8 @@ import com.kotlin.freak_core.net.callback.IError
 import com.kotlin.freak_core.net.callback.IFail
 import com.kotlin.freak_core.net.callback.IRequest
 import com.kotlin.freak_core.net.callback.ISuccess
-import com.kotlin.freak_core.ui.FreakLoader
-import com.kotlin.freak_core.ui.LoaderStyle
+import com.kotlin.freak_core.ui.loader.FreakLoader
+import com.kotlin.freak_core.ui.loader.LoaderStyle
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import java.io.File

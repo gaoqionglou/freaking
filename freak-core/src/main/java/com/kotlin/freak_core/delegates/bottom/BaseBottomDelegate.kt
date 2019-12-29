@@ -73,7 +73,7 @@ abstract class BaseBottomDelegate : FreakDelegate(), View.OnClickListener {
         }
 
 
-        var supportfragmentArr = Array<SupportFragment>(size, { ITEM_DELEGATES[it] })
+        var supportfragmentArr = Array<SupportFragment>(size) { ITEM_DELEGATES[it] }
 
         loadMultipleRootFragment(
             R.id.delegate_bottom_container,
@@ -83,7 +83,30 @@ abstract class BaseBottomDelegate : FreakDelegate(), View.OnClickListener {
 
     }
 
-    override fun onClick(v: View?) {
+    fun resetColor(){
+        val size = mBottomBar?.childCount
+        for (i in 0 until size!!){
+            val item = mBottomBar?.getChildAt(i) as RelativeLayout
+            val itemIcon = item.getChildAt(0) as IconTextView
+            itemIcon.setTextColor(Color.GRAY)
+            val itemTitle = item.getChildAt(1) as AppCompatTextView
+            itemTitle.setTextColor(Color.GRAY)
 
+        }
+    }
+
+
+    override fun onClick(v: View?) {
+        val tag = v?.tag as Int
+        resetColor()
+        val item = v as RelativeLayout
+        val itemIcon = item.getChildAt(0) as IconTextView
+        itemIcon.setTextColor(mClickedColor)
+        val itemTitle = item.getChildAt(1) as AppCompatTextView
+        itemTitle.setTextColor(mClickedColor)
+
+        showHideFragment(ITEM_DELEGATES[tag],ITEM_DELEGATES[mCurrentDelegate])
+
+        mCurrentDelegate = tag
     }
 }

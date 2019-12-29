@@ -1,4 +1,4 @@
-package com.kotlin.freak_core.ui
+package com.kotlin.freak_core.ui.loader
 
 import android.content.Context
 import android.view.Gravity
@@ -24,7 +24,8 @@ class FreakLoader {
         fun showLoading(context: Context?, type: String) {
             val dialog = AppCompatDialog(context, R.style.dialog)
 
-            val avLoadingIndicatorView = LoaderCreator.create(type, context)
+            val avLoadingIndicatorView =
+                LoaderCreator.create(type, context)
             dialog.setContentView(avLoadingIndicatorView)
             val deviceWidth = DimenUtil.getScreenWidth()
             val deviceHeight = DimenUtil.getScreenHeight()
@@ -42,7 +43,10 @@ class FreakLoader {
         }
 
         fun showLoading(context: Context?) {
-            showLoading(context, DEFAULT_LOADER)
+            showLoading(
+                context,
+                DEFAULT_LOADER
+            )
         }
 
         fun stopLoading() {
