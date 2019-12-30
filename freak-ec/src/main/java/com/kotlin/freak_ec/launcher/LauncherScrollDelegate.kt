@@ -39,7 +39,7 @@ class LauncherScrollDelegate : FreakDelegate(), OnItemClickListener {
 
         mConvenientBanner?.let {
             it.setPages(LauncherHolderCreator(), INTEGERS)
-                .setPageIndicator(intArrayOf(R.drawable.dot_normal, R.drawable.dot_foucs))
+                .setPageIndicator(intArrayOf(R.drawable.dot_core_normal, R.drawable.dot_core_foucs))
                 .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)
                 .setOnItemClickListener(this)
                 .isCanLoop = true
