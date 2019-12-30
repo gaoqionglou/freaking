@@ -1,0 +1,43 @@
+{
+  "data": [
+    {
+      "goodsId": "0",
+      "spanSize": 4,
+      "banners": [
+        "https://www.csair.com/cn/touch/app/resource/1c094af4394c48e89950063b39de7e45.png",
+        "https://www.csair.com/cn/touch/app/resource/6459b0e8245aa90a8335a015bc82b664.png",
+        "https://www.csair.com/cn/touch/app/resource/8020be6b3b06f93c8594dd771e7680c5.jpg"
+      ]
+    },
+    {
+      "goodsId": "1",
+      "text": "无陪儿童购票新升级 购票即可自动申请服务！",
+      "imageUrl": "https://www.csair.com/cn/touch/app/resource/76e2344beabff99aefb3d253be3d4a43.jpg",
+      "spanSize": 4
+    },
+    {
+      "goodsId": "2",
+      "text": "品质境外游",
+      "imageUrl": "https://www.csair.com/cn/touch/app/resource/894b42c802d4ec65da1e2b8079cd76a8.jpg",
+      "spanSize": 2
+    },
+    {
+      "goodsId": "3",
+      "text": "提前选座",
+      "imageUrl": "https://www.csair.com/cn/touch/app/resource/c91a07405e2a8a0a67e5af9088f4758d.png",
+      "spanSize": 2
+    },
+    {
+      "goodsId": "4",
+      "text": "机票退改功能",
+      "imageUrl": "https://www.csair.com/cn/touch/app/resource/121971c6eeb2c65c51b6d8bec8940b8f.jpg",
+      "spanSize": 2
+    },
+    {
+      "goodsId": "5",
+      "text": "休息室",
+      "imageUrl": "https://www.csair.com/cn/touch/app/resource/2cef3ea1cf051ea282733ab036aaa89b.jpg",
+      "spanSize": 2
+    }
+  ]
+}

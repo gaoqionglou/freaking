@@ -22,7 +22,7 @@ class FreakApp : Application() {
             .withApiHost("https://127.0.0.1/")
             .withIcon(FontEcModule())
             .withIcon(FontAwesomeModule())
-            .withInterceptor(DebugInterceptor("index", R.raw.testjson))
+            .withInterceptor(DebugInterceptor("index", R.raw.index))
             .configure()
         DataBaseManager.init(this)
         Stetho.initializeWithDefaults(this)

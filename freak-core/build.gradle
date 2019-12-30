@@ -64,4 +64,8 @@ dependencies {
     // 网络操作--有网络操作添加
     api 'com.facebook.stetho:stetho-okhttp3:1.5.0'
     api 'com.squareup.okhttp3:okhttp:3.9.0'
+    //recyclerview库
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.0-beta4'
+    //
+    api 'com.alibaba:fastjson:1.1.57.android'
 }

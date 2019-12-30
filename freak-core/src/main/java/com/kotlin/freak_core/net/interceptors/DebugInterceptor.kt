@@ -32,8 +32,8 @@ class DebugInterceptor(
     }
 
     private fun debugResponse(chain: Interceptor.Chain, @RawRes idRes: Int): Response {
-//        val jsonRawStr = readFileFromRaw(Freak.getApplication(), idRes)
-        val jsonRawStr = FileUtil.getFileStremFromAsserts(Freak.getApplication(), "test.json")
+        val jsonRawStr = FileUtil.readFileFromRaw(Freak.getApplication(), idRes)
+//        val jsonRawStr = FileUtil.getFileStremFromAsserts(Freak.getApplication(), "index.json")
         return Response.Builder()
             .code(200)
             .addHeader("Content-Type", "application/json")

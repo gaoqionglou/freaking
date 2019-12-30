@@ -3,6 +3,7 @@ package com.kotlin.freak_ec.launcher
 import android.app.Activity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatTextView
 import butterknife.BindView
 import butterknife.OnClick
@@ -23,6 +24,7 @@ class LauncherDelegate : FreakDelegate(), ITimerListener {
 
 
     var timer: Timer? = null
+    var timerTask: BaseTimerTask? = null
     var mCount = 5
 
     @BindView(R2.id.delegate_launcher_text)
@@ -32,6 +34,10 @@ class LauncherDelegate : FreakDelegate(), ITimerListener {
 
     @OnClick(R2.id.delegate_launcher_text)
     fun onClickTimer() {
+        timer?.cancel()
+        timer = null
+        timerTask?.cancel()
+        timerTask = null
         checkIfShowScroll()
     }
 
@@ -48,7 +54,7 @@ class LauncherDelegate : FreakDelegate(), ITimerListener {
     private fun initTimer() {
 
         timer = Timer()
-        val timerTask = BaseTimerTask(this)
+        timerTask = BaseTimerTask(this)
         timer?.schedule(timerTask, 0, 1000)
 
     }
@@ -79,6 +85,8 @@ class LauncherDelegate : FreakDelegate(), ITimerListener {
                 if (mCount <= 0) {
                     timer?.cancel()
                     timer = null
+                    timerTask?.cancel()
+                    timerTask = null
                     checkIfShowScroll()
                 }
 
@@ -105,5 +113,15 @@ class LauncherDelegate : FreakDelegate(), ITimerListener {
 
             })
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        timer?.cancel()
+        timer = null
+        timerTask?.cancel()
+        timerTask = null
+        Toast.makeText(context, "laucher onDestroyView", Toast.LENGTH_SHORT).show()
+
     }
 }
