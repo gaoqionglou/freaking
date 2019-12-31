@@ -17,7 +17,7 @@ class IndexDataConverter : DataConverter() {
             val data: JSONObject = dataArray.getJSONObject(index)
             val imageUrl = data.getString("imageUrl")
             val text = data.getString("text")
-            val spanSize = data.getString("spanSize")
+            val spanSize = data.getInteger("spanSize")
             val id = data.getInteger("goodsId")
             val banners = data.getJSONArray("banners")
             val bannerImages = ArrayList<String>()

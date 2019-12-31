@@ -13,9 +13,16 @@ import com.kotlin.freak_core.R
 import com.kotlin.freak_core.ui.banner.BannerCreator
 
 
-class MultipleRecyclerAdapter(data: ArrayList<MultipleItemEntity>) :
+class MultipleRecyclerAdapter(data: ArrayList<MultipleItemEntity>?) :
     BaseMultiItemQuickAdapter<MultipleItemEntity, MultipleViewHolder>(data), GridSpanSizeLookup,
     OnItemClickListener {
+
+    init {
+        init()
+    }
+
+
+    //banner的点击事件
     override fun onItemClick(position: Int) {
 
     }
@@ -29,13 +36,13 @@ class MultipleRecyclerAdapter(data: ArrayList<MultipleItemEntity>) :
             return MultipleRecyclerAdapter(data)
         }
 
-        fun create(converter: DataConverter): MultipleRecyclerAdapter {
-            return MultipleRecyclerAdapter(converter.convert())
+        fun create(converter: DataConverter?): MultipleRecyclerAdapter {
+            return MultipleRecyclerAdapter(converter?.convert())
         }
     }
 
 
-    fun init() {
+    private fun init() {
         //设置不同的布局
         addItemType(ItemType.TEXT, R.layout.item_multiple_text)
         addItemType(ItemType.IMAGE, R.layout.item_multiple_image)
@@ -54,9 +61,9 @@ class MultipleRecyclerAdapter(data: ArrayList<MultipleItemEntity>) :
     }
 
     override fun convert(helper: MultipleViewHolder, item: MultipleItemEntity?) {
-        var text: String? = null
-        var imageUrl: String? = null
-        var bannerImages: ArrayList<String>? = null
+        var text: String?
+        var imageUrl: String?
+        var bannerImages: ArrayList<String>?
         when (helper.itemViewType) {
 
             ItemType.TEXT -> {
@@ -74,7 +81,7 @@ class MultipleRecyclerAdapter(data: ArrayList<MultipleItemEntity>) :
                     .into(helper.getView(R.id.img_single))
             }
 
-            ItemType.TEXT_IMAGE->{
+            ItemType.TEXT_IMAGE -> {
                 text = item?.getField(MutilpleFields.TEXT)
                 helper.setText(R.id.tv_multiple, text)
                 imageUrl = item?.getField(MutilpleFields.IMAGE_URL)
@@ -86,11 +93,11 @@ class MultipleRecyclerAdapter(data: ArrayList<MultipleItemEntity>) :
                     .into(helper.getView(R.id.img_multiple))
             }
 
-            ItemType.BANNER->{
-                if(!mIsInitBanner){
+            ItemType.BANNER -> {
+                if (!mIsInitBanner) {
                     bannerImages = item?.getField(MutilpleFields.BANNERS)
                     val banner = helper.getView(R.id.banner_recycler) as ConvenientBanner<String>
-                    BannerCreator.setDefault(banner,bannerImages,this)
+                    BannerCreator.setDefault(banner, bannerImages, this)
                 }
             }
 

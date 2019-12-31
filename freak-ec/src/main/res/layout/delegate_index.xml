@@ -18,14 +18,14 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tb_index"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@android:color/transparent"
+        android:layout_height="50dp"
+        android:background="#aeFF0000"
+        app:layout_behavior=".main.index.TransluncentBehavior"
         app:contentInsetStart="0dp">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/holo_orange_light"
             android:orientation="horizontal">
 
             <com.joanzapata.iconify.widget.IconTextView
@@ -46,7 +46,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="4"
                 android:background="@android:color/white"
-                android:gravity="left"
+                android:gravity="center_vertical"
                 android:paddingLeft="20dp"
                 android:hint="搜索" />
 

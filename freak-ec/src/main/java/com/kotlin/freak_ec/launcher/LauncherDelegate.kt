@@ -3,7 +3,6 @@ package com.kotlin.freak_ec.launcher
 import android.app.Activity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.widget.AppCompatTextView
 import butterknife.BindView
 import butterknife.OnClick
@@ -121,7 +120,6 @@ class LauncherDelegate : FreakDelegate(), ITimerListener {
         timer = null
         timerTask?.cancel()
         timerTask = null
-        Toast.makeText(context, "laucher onDestroyView", Toast.LENGTH_SHORT).show()
 
     }
 }

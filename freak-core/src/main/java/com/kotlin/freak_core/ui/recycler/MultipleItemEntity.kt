@@ -7,8 +7,8 @@ import java.lang.ref.SoftReference
 class MultipleItemEntity() : MultiItemEntity {
 
     companion object {
-        fun builder(): MutipleEntityBuilder {
-            return MutipleEntityBuilder()
+        fun builder(): MultipleEntityBuilder {
+            return MultipleEntityBuilder()
         }
     }
 
@@ -18,8 +18,8 @@ class MultipleItemEntity() : MultiItemEntity {
         SoftReference(MUTIPLE_FIELDS, ITEM_QUENE)
 
 
-    constructor(fileds: LinkedHashMap<Any?, Any?>) : this() {
-        FIELDS_REFERENCES.get()?.putAll(fileds)
+    constructor(fields: LinkedHashMap<Any?, Any?>) : this() {
+        FIELDS_REFERENCES.get()?.putAll(fields)
     }
 
 

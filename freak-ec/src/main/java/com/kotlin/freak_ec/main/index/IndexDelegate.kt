@@ -1,21 +1,18 @@
 package com.kotlin.freak_ec.main.index
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.BindView
 import com.joanzapata.iconify.widget.IconTextView
 import com.kotlin.freak_core.delegates.bottom.BottomItemDelegate
-import com.kotlin.freak_core.net.RestClient
-import com.kotlin.freak_core.net.callback.IError
-import com.kotlin.freak_core.net.callback.IFail
-import com.kotlin.freak_core.net.callback.ISuccess
-import com.kotlin.freak_core.ui.recycler.MultipleItemEntity
-import com.kotlin.freak_core.ui.recycler.MutilpleFields
+import com.kotlin.freak_core.ui.recycler.BaseDecoration
 import com.kotlin.freak_core.ui.refresh.RefreshHandler
 import com.kotlin.freak_ec.R
 import com.kotlin.freak_ec.R2
@@ -54,9 +51,24 @@ class IndexDelegate : BottomItemDelegate() {
         mRefreshLayout?.setProgressViewOffset(true, 120, 300)
     }
 
+    private fun initRecyclerView() {
+        val manager: GridLayoutManager = GridLayoutManager(context, 4)
+        mRecyclerView?.layoutManager = manager
+        mRecyclerView?.addItemDecoration(
+            BaseDecoration.create(
+                ContextCompat.getColor(
+                    context as Context,
+                    android.R.color.darker_gray
+                ), 5
+            )
+        )
+
+    }
+
     override fun onLazyInitView(savedInstanceState: Bundle?) {
         super.onLazyInitView(savedInstanceState)
         initRefreshLayout()
+        initRecyclerView()
         mRefreshHandler?.firstPage()
     }
 
@@ -65,36 +77,7 @@ class IndexDelegate : BottomItemDelegate() {
     }
 
     override fun onBindView(savedInstanceState: Bundle?, rootView: View) {
-        mRefreshHandler = RefreshHandler(mRefreshLayout)
-        RestClient.builder()
-            .url("index")
-            .success(object : ISuccess {
-                override fun onSuccess(response: String?) {
-                    val indexDataConverter = IndexDataConverter()
-
-                    val list: ArrayList<MultipleItemEntity> =
-                        indexDataConverter.setJsonData(response).convert()
-
-                    val imageUrl = list[1].getField<String>(MutilpleFields.IMAGE_URL)
-
-                    Toast.makeText(context, imageUrl, Toast.LENGTH_LONG).show()
-                }
-
-            })
-            .error(object : IError {
-                override fun onIError(code: Int, message: String) {
-
-                }
-
-            })
-            .fail(object : IFail {
-                override fun onFail() {
-
-                }
-
-            })
-            .build()
-            .get()
+        mRefreshHandler = RefreshHandler.create(mRefreshLayout, mRecyclerView, IndexDataConverter())
     }
 
 

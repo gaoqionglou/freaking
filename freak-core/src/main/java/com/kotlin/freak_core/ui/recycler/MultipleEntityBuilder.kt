@@ -1,6 +1,6 @@
 package com.kotlin.freak_core.ui.recycler
 
-class MutipleEntityBuilder() {
+class MultipleEntityBuilder() {
     init {
         FIELDS.clear()
     }
@@ -10,17 +10,17 @@ class MutipleEntityBuilder() {
     }
 
 
-    fun setItemType(itemType: Int): MutipleEntityBuilder {
+    fun setItemType(itemType: Int): MultipleEntityBuilder {
         FIELDS[MutilpleFields.ITEM_TYPE] = itemType
         return this
     }
 
-    fun setField(key: Any?, value: Any?): MutipleEntityBuilder {
+    fun setField(key: Any?, value: Any?): MultipleEntityBuilder {
         FIELDS[key] = value
         return this
     }
 
-    fun setFields(map: LinkedHashMap<Any?, Any?>): MutipleEntityBuilder {
+    fun setFields(map: LinkedHashMap<Any?, Any?>): MultipleEntityBuilder {
         FIELDS.putAll(map)
         return this
     }

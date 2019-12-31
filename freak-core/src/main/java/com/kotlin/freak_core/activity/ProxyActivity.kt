@@ -7,6 +7,7 @@ import com.kotlin.freak_core.R
 
 import com.kotlin.freak_core.delegates.FreakDelegate
 import me.yokeyword.fragmentation.SupportActivity
+import qiu.niorgai.StatusBarCompat
 
 
 abstract class ProxyActivity : SupportActivity() {
@@ -15,6 +16,7 @@ abstract class ProxyActivity : SupportActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initContainer(savedInstanceState)
+        StatusBarCompat.translucentStatusBar(this, true)
     }
 
     @SuppressLint("RestrictedApi")
