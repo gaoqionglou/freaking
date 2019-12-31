@@ -15,12 +15,12 @@
             android:layout_height="match_parent" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <android.support.v7.widget.AppCompatTextView
+    <android.support.v7.widget.Toolbar
         android:id="@+id/tb_index"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#aeFF0000"
-        app:layout_behavior=".main.index.TransluncentBehavior"
+        app:layout_behavior="com.kotlin.freak_ec.main.index.TransluncentBehavior"
         app:contentInsetStart="0dp">
 
         <android.support.v7.widget.LinearLayoutCompat
@@ -61,5 +61,5 @@
                 android:textColor="@android:color/white"
                 android:textSize="25sp" />
         </android.support.v7.widget.LinearLayoutCompat>
-    </android.support.v7.widget.AppCompatTextView>
+    </android.support.v7.widget.Toolbar>
 </android.support.design.widget.CoordinatorLayout>
