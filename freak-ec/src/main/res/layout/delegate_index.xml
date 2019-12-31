@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#aeFF0000"
-        app:layout_behavior=".main.index.TransluncentBehavior"
+        app:layout_behavior="com.kotlin.freak_ec.main.index.TransluncentBehavior"
         app:contentInsetStart="0dp">
 
         <androidx.appcompat.widget.LinearLayoutCompat
