@@ -3,7 +3,7 @@ package com.kotlin.freak_core.app
 import android.content.Context
 import android.os.Handler
 import android.os.Message
-import androidx.annotation.MainThread
+
 import java.util.*
 
 

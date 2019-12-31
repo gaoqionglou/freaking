@@ -1,9 +1,10 @@
 package com.kotlin.freak_ec.launcher
 
+
 import android.app.Activity
 import android.os.Bundle
+import android.support.v7.widget.AppCompatTextView
 import android.view.View
-import androidx.appcompat.widget.AppCompatTextView
 import butterknife.BindView
 import butterknife.OnClick
 import com.kotlin.freak_core.app.AccountManager
@@ -42,6 +43,8 @@ class LauncherDelegate : FreakDelegate(), ITimerListener {
 
 
     var iLauncherListener: ILauncherListener? = null
+
+
     override fun onAttach(activity: Activity?) {
         super.onAttach(activity)
         if (activity is ILauncherListener) {

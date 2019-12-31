@@ -1,21 +1,26 @@
 package com.kotlin.freak_core.ui.recycler
 
 
+import android.support.v7.widget.AppCompatImageView
+import android.support.v7.widget.GridLayoutManager
 import android.view.View
-import androidx.recyclerview.widget.GridLayoutManager
+
 import com.bigkoo.convenientbanner.ConvenientBanner
 import com.bigkoo.convenientbanner.listener.OnItemClickListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
-import com.chad.library.adapter.base.listener.GridSpanSizeLookup
+import com.chad.library.adapter.base.BaseQuickAdapter
+
 import com.kotlin.freak_core.R
 import com.kotlin.freak_core.ui.banner.BannerCreator
 
 
 class MultipleRecyclerAdapter(data: ArrayList<MultipleItemEntity>?) :
-    BaseMultiItemQuickAdapter<MultipleItemEntity, MultipleViewHolder>(data), GridSpanSizeLookup,
+    BaseMultiItemQuickAdapter<MultipleItemEntity, MultipleViewHolder>(data),
+    BaseQuickAdapter.SpanSizeLookup,
     OnItemClickListener {
+
 
     init {
         init()
@@ -49,10 +54,11 @@ class MultipleRecyclerAdapter(data: ArrayList<MultipleItemEntity>?) :
         addItemType(ItemType.TEXT_IMAGE, R.layout.item_multiple_text_image)
         addItemType(ItemType.BANNER, R.layout.item_multiple_banner)
         //设置宽度监听
-        setGridSpanSizeLookup(this)
-        animationEnable = true
+        setSpanSizeLookup(this)
+        openLoadAnimation()
         //多次执行动画
-        isAnimationFirstOnly = false
+        isFirstOnly(false)
+
     }
 
 
@@ -60,43 +66,43 @@ class MultipleRecyclerAdapter(data: ArrayList<MultipleItemEntity>?) :
         return MultipleViewHolder.create(view)
     }
 
-    override fun convert(helper: MultipleViewHolder, item: MultipleItemEntity?) {
+    override fun convert(holder: MultipleViewHolder, item: MultipleItemEntity?) {
         var text: String?
         var imageUrl: String?
         var bannerImages: ArrayList<String>?
-        when (helper.itemViewType) {
+        when (holder.itemViewType) {
 
             ItemType.TEXT -> {
                 text = item?.getField(MutilpleFields.TEXT)
-                helper.setText(R.id.text_single, text)
+                holder.setText(R.id.text_single, text)
             }
 
             ItemType.IMAGE -> {
                 imageUrl = item?.getField(MutilpleFields.IMAGE_URL)
-                Glide.with(context)
+                Glide.with(mContext)
                     .load(imageUrl)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .dontAnimate()
                     .centerCrop()
-                    .into(helper.getView(R.id.img_single))
+                    .into(holder.getView(R.id.img_single) as AppCompatImageView)
             }
 
             ItemType.TEXT_IMAGE -> {
                 text = item?.getField(MutilpleFields.TEXT)
-                helper.setText(R.id.tv_multiple, text)
+                holder.setText(R.id.tv_multiple, text)
                 imageUrl = item?.getField(MutilpleFields.IMAGE_URL)
-                Glide.with(context)
+                Glide.with(mContext)
                     .load(imageUrl)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .dontAnimate()
                     .centerCrop()
-                    .into(helper.getView(R.id.img_multiple))
+                    .into(holder.getView(R.id.img_multiple) as AppCompatImageView)
             }
 
             ItemType.BANNER -> {
                 if (!mIsInitBanner) {
                     bannerImages = item?.getField(MutilpleFields.BANNERS)
-                    val banner = helper.getView(R.id.banner_recycler) as ConvenientBanner<String>
+                    val banner = holder.getView(R.id.banner_recycler) as ConvenientBanner<String>
                     BannerCreator.setDefault(banner, bannerImages, this)
                 }
             }
@@ -104,11 +110,8 @@ class MultipleRecyclerAdapter(data: ArrayList<MultipleItemEntity>?) :
         }
     }
 
-    override fun getSpanSize(
-        gridLayoutManager: GridLayoutManager?,
-        viewType: Int,
-        position: Int
-    ): Int {
+    override fun getSpanSize(gridLayoutManager: GridLayoutManager?, position: Int): Int {
         return data[position].getField(MutilpleFields.SPAN_SIZE)
     }
+
 }

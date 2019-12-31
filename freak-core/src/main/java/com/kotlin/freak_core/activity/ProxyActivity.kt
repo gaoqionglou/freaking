@@ -2,7 +2,8 @@ package com.kotlin.freak_core.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.appcompat.widget.ContentFrameLayout
+import android.support.v7.widget.ContentFrameLayout
+
 import com.kotlin.freak_core.R
 
 import com.kotlin.freak_core.delegates.FreakDelegate
@@ -22,7 +23,7 @@ abstract class ProxyActivity : SupportActivity() {
     @SuppressLint("RestrictedApi")
     private fun initContainer(savedInstanceState: Bundle?){
 
-        val conentFrameLayout:ContentFrameLayout = ContentFrameLayout(this)
+        val conentFrameLayout: ContentFrameLayout = ContentFrameLayout(this)
         conentFrameLayout.id = R.id.delegate_container
         if(savedInstanceState==null) {
             loadRootFragment(R.id.delegate_container, setRootDelegate())

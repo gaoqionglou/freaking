@@ -6,6 +6,7 @@ import java.lang.ref.SoftReference
 
 class MultipleItemEntity() : MultiItemEntity {
 
+
     companion object {
         fun builder(): MultipleEntityBuilder {
             return MultipleEntityBuilder()
@@ -23,9 +24,9 @@ class MultipleItemEntity() : MultiItemEntity {
     }
 
 
-    override val itemType: Int
-        get() = FIELDS_REFERENCES.get()?.get(MutilpleFields.ITEM_TYPE) as Int
-
+    override fun getItemType(): Int {
+        return FIELDS_REFERENCES.get()?.get(MutilpleFields.ITEM_TYPE) as Int
+    }
 
     @Suppress("UNCHECKED_CAST")
     fun <T> getField(key: Any): T {

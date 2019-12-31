@@ -18,7 +18,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
     }
 
@@ -61,6 +61,6 @@ dependencies {
     implementation 'org.greenrobot:greendao:3.2.2'
 //    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
     //kotlin使用kapt
-    kapt  'com.jakewharton:butterknife-compiler:10.2.0'
+    kapt  'com.jakewharton:butterknife-compiler:9.0.0'
 
 }

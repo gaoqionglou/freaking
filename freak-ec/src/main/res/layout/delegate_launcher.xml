@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/delegate_launcher_text"
         android:layout_width="70dp"
         android:layout_height="70dp"

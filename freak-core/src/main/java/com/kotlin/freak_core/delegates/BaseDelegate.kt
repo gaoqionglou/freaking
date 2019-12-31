@@ -1,11 +1,13 @@
 package com.kotlin.freak_core.delegates
 
-import android.app.Activity
+
 import android.os.Bundle
+import android.support.annotation.Nullable
+import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.Nullable
+
 import butterknife.ButterKnife
 import butterknife.Unbinder
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment
@@ -38,7 +40,7 @@ abstract class BaseDelegate : SwipeBackFragment() {
     }
 
 
-    fun getProxyActivity(): Activity {
+    fun getProxyActivity(): AppCompatActivity {
         return _mActivity;
     }
 

@@ -1,6 +1,7 @@
 package com.kotlin.freak_core.net.interceptors
 
-import androidx.annotation.RawRes
+
+import android.support.annotation.RawRes
 import com.kotlin.freak_core.app.Freak
 import com.kotlin.freak_core.util.file.FileUtil
 import okhttp3.*

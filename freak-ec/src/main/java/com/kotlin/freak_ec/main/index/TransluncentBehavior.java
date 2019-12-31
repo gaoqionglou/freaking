@@ -1,13 +1,11 @@
 package com.kotlin.freak_ec.main.index;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.View;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import com.kotlin.freak_core.ui.recycler.RgbValue;
 import com.kotlin.freak_ec.R;
@@ -17,6 +15,8 @@ public class TransluncentBehavior extends CoordinatorLayout.Behavior<Toolbar> {
     private int mDistanceY = 0;
     private RgbValue rgb_value = new RgbValue(255, 124, 2);
 
+    public TransluncentBehavior() {
+    }
 
     public TransluncentBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -34,7 +34,7 @@ public class TransluncentBehavior extends CoordinatorLayout.Behavior<Toolbar> {
 
     @Override
     public void onNestedPreScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull Toolbar child, @NonNull View target, int dx, int dy, @NonNull int[] consumed, int type) {
-        //增加滑动距离
+/*        //增加滑动距离
         mDistanceY += dy;
 //toolbar的高度
         int targetHeight = child.getBottom();
@@ -58,6 +58,6 @@ public class TransluncentBehavior extends CoordinatorLayout.Behavior<Toolbar> {
                             rgb_value.blue()
                     )
             );
-        }
+        }*/
     }
 }

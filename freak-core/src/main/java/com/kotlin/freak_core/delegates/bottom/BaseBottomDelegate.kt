@@ -2,17 +2,16 @@ package com.kotlin.freak_core.delegates.bottom
 
 import android.graphics.Color
 import android.os.Bundle
+import android.support.v7.widget.AppCompatTextView
+import android.support.v7.widget.LinearLayoutCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.RelativeLayout
-import androidx.appcompat.widget.AppCompatTextView
-import androidx.appcompat.widget.LinearLayoutCompat
 import butterknife.BindView
 import com.joanzapata.iconify.widget.IconTextView
 import com.kotlin.freak_core.R
 import com.kotlin.freak_core.R2
 import com.kotlin.freak_core.delegates.FreakDelegate
-import kotlinx.android.synthetic.main.delegate_bottom.view.*
 import me.yokeyword.fragmentation.SupportFragment
 
 abstract class BaseBottomDelegate : FreakDelegate(), View.OnClickListener {

@@ -1,9 +1,10 @@
 package com.kotlin.freak_core.ui.loader
 
 import android.content.Context
+import android.support.v7.app.AppCompatDialog
 import android.view.Gravity
 import android.view.WindowManager
-import androidx.appcompat.app.AppCompatDialog
+
 import com.kotlin.freak_core.R
 import com.kotlin.freak_core.util.dimen.DimenUtil
 

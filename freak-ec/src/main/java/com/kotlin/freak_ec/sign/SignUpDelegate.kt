@@ -3,13 +3,15 @@ package com.kotlin.freak_ec.sign
 
 import android.app.Activity
 import android.os.Bundle
+import android.support.design.widget.TextInputEditText
+import android.support.v7.widget.AppCompatButton
 import android.util.Patterns
 import android.view.View
-import androidx.appcompat.widget.AppCompatButton
+
 import butterknife.BindView
 import butterknife.OnClick
 
-import com.google.android.material.textfield.TextInputEditText
+
 import com.kotlin.freak_core.app.AccountManager
 import com.kotlin.freak_core.delegates.FreakDelegate
 import com.kotlin.freak_ec.R
