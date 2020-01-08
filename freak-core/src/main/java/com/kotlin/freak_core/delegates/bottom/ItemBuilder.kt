@@ -30,6 +30,4 @@ class ItemBuilder {
 class BottomTabBean(
     val ICON: CharSequence? = null,
     val TITLE: CharSequence? = null
-) {
-
-}
+)
