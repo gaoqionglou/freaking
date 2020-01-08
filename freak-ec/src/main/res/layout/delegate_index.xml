@@ -15,17 +15,19 @@
             android:layout_height="match_parent" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tb_index"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#aeFF0000"
-        app:layout_behavior="com.kotlin.freak_ec.main.index.TransluncentBehavior"
+        android:layout_height="70dp"
+        app:layout_behavior="com.kotlin.freak_ec.main.index.TranslucentBehavior"
         app:contentInsetStart="0dp">
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:paddingTop="@dimen/status_bar_height"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingBottom="5dp"
             android:orientation="horizontal">
 
             <com.joanzapata.iconify.widget.IconTextView

@@ -1,13 +1,13 @@
 package com.kotlin.freak_core.activity
 
+
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.widget.ContentFrameLayout
+import com.gyf.immersionbar.ImmersionBar
 import com.kotlin.freak_core.R
-
 import com.kotlin.freak_core.delegates.FreakDelegate
 import me.yokeyword.fragmentation.SupportActivity
-import qiu.niorgai.StatusBarCompat
 
 
 abstract class ProxyActivity : SupportActivity() {
@@ -16,18 +16,18 @@ abstract class ProxyActivity : SupportActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initContainer(savedInstanceState)
-        StatusBarCompat.translucentStatusBar(this, true)
+        ImmersionBar.with(this).transparentStatusBar().init()
     }
 
     @SuppressLint("RestrictedApi")
     private fun initContainer(savedInstanceState: Bundle?){
 
-        val conentFrameLayout:ContentFrameLayout = ContentFrameLayout(this)
-        conentFrameLayout.id = R.id.delegate_container
+        val contentFrameLayout: ContentFrameLayout = ContentFrameLayout(this)
+        contentFrameLayout.id = R.id.delegate_container
         if(savedInstanceState==null) {
             loadRootFragment(R.id.delegate_container, setRootDelegate())
         }
-        setContentView(conentFrameLayout)
+        setContentView(contentFrameLayout)
     }
 
     override fun onDestroy() {

@@ -77,7 +77,7 @@ class MultipleRecyclerAdapter(data: ArrayList<MultipleItemEntity>?) :
                     .load(imageUrl)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .dontAnimate()
-                    .centerCrop()
+//                    .fitCenter()
                     .into(helper.getView(R.id.img_single))
             }
 
@@ -89,7 +89,7 @@ class MultipleRecyclerAdapter(data: ArrayList<MultipleItemEntity>?) :
                     .load(imageUrl)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .dontAnimate()
-                    .centerCrop()
+//                    .fitCenter()
                     .into(helper.getView(R.id.img_multiple))
             }
 
