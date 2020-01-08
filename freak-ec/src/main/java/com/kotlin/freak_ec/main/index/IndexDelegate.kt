@@ -16,6 +16,7 @@ import com.kotlin.freak_core.ui.recycler.BaseDecoration
 import com.kotlin.freak_core.ui.refresh.RefreshHandler
 import com.kotlin.freak_ec.R
 import com.kotlin.freak_ec.R2
+import com.kotlin.freak_ec.main.EcBottomDelegate
 
 class IndexDelegate : BottomItemDelegate() {
 
@@ -63,6 +64,7 @@ class IndexDelegate : BottomItemDelegate() {
             )
         )
 
+
     }
 
     override fun onLazyInitView(savedInstanceState: Bundle?) {
@@ -77,7 +79,12 @@ class IndexDelegate : BottomItemDelegate() {
     }
 
     override fun onBindView(savedInstanceState: Bundle?, rootView: View) {
-        mRefreshHandler = RefreshHandler.create(mRefreshLayout, mRecyclerView, IndexDataConverter())
+        mRefreshHandler = RefreshHandler.create(
+            mRefreshLayout,
+            mRecyclerView,
+            IndexDataConverter(),
+            getParentDelegate<EcBottomDelegate>()
+        )
     }
 
 

@@ -2,20 +2,27 @@ package com.kotlin.freak_core.ui.recycler
 
 
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bigkoo.convenientbanner.ConvenientBanner
-import com.bigkoo.convenientbanner.listener.OnItemClickListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.GridSpanSizeLookup
+import com.chad.library.adapter.base.listener.OnItemChildClickListener
 import com.kotlin.freak_core.R
+import com.kotlin.freak_core.app.Freak
+import com.kotlin.freak_core.delegates.FreakDelegate
 import com.kotlin.freak_core.ui.banner.BannerCreator
 
 
-class MultipleRecyclerAdapter(data: ArrayList<MultipleItemEntity>?) :
+class MultipleRecyclerAdapter(delegate: FreakDelegate, data: ArrayList<MultipleItemEntity>?) :
     BaseMultiItemQuickAdapter<MultipleItemEntity, MultipleViewHolder>(data), GridSpanSizeLookup,
-    OnItemClickListener {
+    com.bigkoo.convenientbanner.listener.OnItemClickListener,
+    com.chad.library.adapter.base.listener.OnItemClickListener,
+    OnItemChildClickListener {
+
 
     init {
         init()
@@ -24,7 +31,11 @@ class MultipleRecyclerAdapter(data: ArrayList<MultipleItemEntity>?) :
 
     //banner的点击事件
     override fun onItemClick(position: Int) {
-
+        Toast.makeText(
+            Freak.getApplication(),
+            "banner onItemClick 收到: " + "点击了第 " + position + " 一次",
+            Toast.LENGTH_LONG
+        ).show()
     }
 
 
@@ -32,12 +43,15 @@ class MultipleRecyclerAdapter(data: ArrayList<MultipleItemEntity>?) :
     private var mIsInitBanner = false
 
     companion object {
-        fun create(data: ArrayList<MultipleItemEntity>): MultipleRecyclerAdapter {
-            return MultipleRecyclerAdapter(data)
+        fun create(
+            delegate: FreakDelegate,
+            data: ArrayList<MultipleItemEntity>
+        ): MultipleRecyclerAdapter {
+            return MultipleRecyclerAdapter(delegate, data)
         }
 
-        fun create(converter: DataConverter?): MultipleRecyclerAdapter {
-            return MultipleRecyclerAdapter(converter?.convert())
+        fun create(delegate: FreakDelegate, converter: DataConverter?): MultipleRecyclerAdapter {
+            return MultipleRecyclerAdapter(delegate, converter?.convert())
         }
     }
 
@@ -53,6 +67,8 @@ class MultipleRecyclerAdapter(data: ArrayList<MultipleItemEntity>?) :
         animationEnable = true
         //多次执行动画
         isAnimationFirstOnly = false
+        setOnItemClickListener(this)
+        setOnItemChildClickListener(this)
     }
 
 
@@ -104,6 +120,7 @@ class MultipleRecyclerAdapter(data: ArrayList<MultipleItemEntity>?) :
         }
     }
 
+
     override fun getSpanSize(
         gridLayoutManager: GridLayoutManager?,
         viewType: Int,
@@ -111,4 +128,21 @@ class MultipleRecyclerAdapter(data: ArrayList<MultipleItemEntity>?) :
     ): Int {
         return data[position].getField(MutilpleFields.SPAN_SIZE)
     }
+
+    override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        Toast.makeText(
+            Freak.getApplication(),
+            "onItemChildClick 收到: " + "点击了第 " + position + " 一次",
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        Toast.makeText(
+            Freak.getApplication(),
+            "onItemClick 收到: " + "点击了第 " + position + " 一次",
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
 }
