@@ -1,6 +1,8 @@
 package com.kotlin.freak_core.net.interceptors
 
 import androidx.annotation.RawRes
+import com.kotlin.freak_core.R
+
 import com.kotlin.freak_core.app.Freak
 import com.kotlin.freak_core.util.file.FileUtil
 import okhttp3.*
@@ -12,11 +14,20 @@ class DebugInterceptor(
 ) : BaseInterceptor() {
 
 
+    companion object {
+        const val sort_list_url: String = "sort_list_data"
+        val sort_list_data: Int = R.raw.sort_list_data
+    }
+
+
     override fun onIntercept(chain: Interceptor.Chain): Response {
         val url = chain.request().url().toString()
         if (url.contains(DEBUG_URL)) {
             return debugResponse(chain, DEBUG_RAW_ID)
+        } else if (url.contains(sort_list_url)) {
+            return debugResponse(chain, sort_list_data)
         }
+
         return chain.proceed(chain.request())
     }
 

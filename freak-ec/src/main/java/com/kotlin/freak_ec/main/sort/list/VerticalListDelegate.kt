@@ -8,8 +8,10 @@ import butterknife.BindView
 import com.kotlin.freak_core.delegates.FreakDelegate
 import com.kotlin.freak_core.net.RestClient
 import com.kotlin.freak_core.net.callback.ISuccess
+import com.kotlin.freak_core.net.interceptors.DebugInterceptor
 import com.kotlin.freak_ec.R
 import com.kotlin.freak_ec.R2
+import com.kotlin.freak_ec.main.sort.SortDelegate
 
 class VerticalListDelegate : FreakDelegate() {
 
@@ -36,13 +38,14 @@ class VerticalListDelegate : FreakDelegate() {
     override fun onLazyInitView(savedInstanceState: Bundle?) {
         super.onLazyInitView(savedInstanceState)
         RestClient.builder()
-            .url("sort_list")
+            .url(DebugInterceptor.sort_list_url)
             .success(object : ISuccess {
                 override fun onSuccess(response: String?) {
                     val data = VerticalListDataConverter().setJsonData(response).convert()
-
+                    val sortDelegate: SortDelegate = getParentDelegate()
+                    val adapter = SortRecyclerAdapter(data, sortDelegate)
+                    mRecyclerView?.adapter = adapter
                 }
-
             })
             .build()
             .get()

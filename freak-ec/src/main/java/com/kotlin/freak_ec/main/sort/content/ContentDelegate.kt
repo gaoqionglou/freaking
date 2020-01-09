@@ -2,13 +2,21 @@ package com.kotlin.freak_ec.main.sort.content
 
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import butterknife.BindView
 import com.kotlin.freak_core.delegates.FreakDelegate
 import com.kotlin.freak_ec.R
+import com.kotlin.freak_ec.R2
 
 class ContentDelegate : FreakDelegate() {
 
 
     private var contentId: Int = -1
+
+    @BindView(R2.id.rv_list_content)
+    @JvmField
+    var mRecyclerView: RecyclerView? = null
 
     companion object {
         @JvmStatic
@@ -34,6 +42,12 @@ class ContentDelegate : FreakDelegate() {
 
     override fun onBindView(savedInstanceState: Bundle?, rootView: View) {
 
+    }
+
+
+    fun initRecyclerView() {
+        val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        mRecyclerView?.layoutManager = layoutManager
     }
 
 }
