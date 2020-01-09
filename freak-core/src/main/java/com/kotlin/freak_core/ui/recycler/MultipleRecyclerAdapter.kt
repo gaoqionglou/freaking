@@ -13,7 +13,7 @@ import com.kotlin.freak_core.R
 import com.kotlin.freak_core.ui.banner.BannerCreator
 
 
-class MultipleRecyclerAdapter(data: ArrayList<MultipleItemEntity>?) :
+open class MultipleRecyclerAdapter(data: ArrayList<MultipleItemEntity>?) :
     BaseMultiItemQuickAdapter<MultipleItemEntity, MultipleViewHolder>(data), GridSpanSizeLookup,
     OnItemClickListener {
 

@@ -16,7 +16,7 @@ import com.kotlin.freak_core.util.timer.BaseTimerTask
 import com.kotlin.freak_core.util.timer.ITimerListener
 import com.kotlin.freak_ec.R
 import com.kotlin.freak_ec.R2
-import me.yokeyword.fragmentation.ISupportFragment
+import me.yokeyword.fragmentation.SupportFragment
 import java.util.*
 
 class LauncherDelegate : FreakDelegate(), ITimerListener {
@@ -98,7 +98,7 @@ class LauncherDelegate : FreakDelegate(), ITimerListener {
 
     fun checkIfShowScroll() {
         if (!FreakPreference.getAppFlag(LanucherScrollStatus.HAS_FIRST_START_APP.name)) {
-            start(LauncherScrollDelegate(), ISupportFragment.SINGLETASK)
+            start(LauncherScrollDelegate(), SupportFragment.SINGLETASK)
         } else {
             //是否登录
             AccountManager.checkAccount(object : IUserChecker {
