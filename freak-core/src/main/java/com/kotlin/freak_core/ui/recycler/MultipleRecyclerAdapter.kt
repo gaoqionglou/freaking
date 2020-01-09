@@ -61,9 +61,9 @@ class MultipleRecyclerAdapter(data: ArrayList<MultipleItemEntity>?) :
     }
 
     override fun convert(helper: MultipleViewHolder, item: MultipleItemEntity?) {
-        var text: String?
-        var imageUrl: String?
-        var bannerImages: ArrayList<String>?
+        val text: String?
+        val imageUrl: String?
+        val bannerImages: ArrayList<String>?
         when (helper.itemViewType) {
 
             ItemType.TEXT -> {
