@@ -10,15 +10,19 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.BindView
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.joanzapata.iconify.widget.IconTextView
 import com.kotlin.freak_core.delegates.bottom.BottomItemDelegate
 import com.kotlin.freak_core.ui.recycler.BaseDecoration
 import com.kotlin.freak_core.ui.refresh.RefreshHandler
 import com.kotlin.freak_ec.R
 import com.kotlin.freak_ec.R2
+import com.kotlin.freak_ec.detail.GoodsDetailDelegate
 import com.kotlin.freak_ec.main.EcBottomDelegate
 
-class IndexDelegate : BottomItemDelegate() {
+class IndexDelegate : BottomItemDelegate(), OnItemClickListener {
+
 
     @BindView(R2.id.sw_index)
     @JvmField
@@ -64,7 +68,6 @@ class IndexDelegate : BottomItemDelegate() {
             )
         )
 
-
     }
 
     override fun onLazyInitView(savedInstanceState: Bundle?) {
@@ -79,13 +82,14 @@ class IndexDelegate : BottomItemDelegate() {
     }
 
     override fun onBindView(savedInstanceState: Bundle?, rootView: View) {
-        mRefreshHandler = RefreshHandler.create(
-            mRefreshLayout,
-            mRecyclerView,
-            IndexDataConverter(),
-            getParentDelegate<EcBottomDelegate>()
-        )
+        mRefreshHandler =
+            RefreshHandler.create(mRefreshLayout, mRecyclerView, IndexDataConverter())
+        mRefreshHandler?.setListItemOnItemClickListener(this)
     }
 
+    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        val ecBottomDelegate: EcBottomDelegate = getParentDelegate()
+        ecBottomDelegate.start(GoodsDetailDelegate.create())
+    }
 
 }
