@@ -6,17 +6,23 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import butterknife.BindView
 import com.kotlin.freak_core.delegates.FreakDelegate
+import com.kotlin.freak_core.net.RestClient
+import com.kotlin.freak_core.net.callback.ISuccess
+import com.kotlin.freak_core.net.interceptors.DebugInterceptor
 import com.kotlin.freak_ec.R
 import com.kotlin.freak_ec.R2
 
 class ContentDelegate : FreakDelegate() {
 
 
-    private var contentId: Int = -1
-
     @BindView(R2.id.rv_list_content)
     @JvmField
     var mRecyclerView: RecyclerView? = null
+
+    private var contentId: Int = -1
+
+    private var mData: ArrayList<SectionBean>? = null
+
 
     companion object {
         @JvmStatic
@@ -41,7 +47,8 @@ class ContentDelegate : FreakDelegate() {
     }
 
     override fun onBindView(savedInstanceState: Bundle?, rootView: View) {
-
+        initRecyclerView()
+        initData()
     }
 
 
@@ -50,4 +57,21 @@ class ContentDelegate : FreakDelegate() {
         mRecyclerView?.layoutManager = layoutManager
     }
 
+
+    fun initData() {
+        RestClient.builder().url(DebugInterceptor.sort_content_list_url)
+            .success(object : ISuccess {
+                override fun onSuccess(response: String?) {
+                    mData = SectionDataConverter().convert(response!!)
+                    val sectionAdapter = SectionAdapter(
+                        R.layout.item_section_content,
+                        R.layout.item_section_header,
+                        mData!!
+                    )
+                    mRecyclerView?.adapter = sectionAdapter
+                }
+
+            }).build()
+            .get()
+    }
 }

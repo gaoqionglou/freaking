@@ -2,6 +2,7 @@ package com.kotlin.freak_core.net.interceptors
 
 import androidx.annotation.RawRes
 import com.kotlin.freak_core.R
+import com.kotlin.freak_core.app.ConfigKey
 
 import com.kotlin.freak_core.app.Freak
 import com.kotlin.freak_core.util.file.FileUtil
@@ -15,8 +16,18 @@ class DebugInterceptor(
 
 
     companion object {
-        const val sort_list_url: String = "sort_list_data"
-        val sort_list_data: Int = R.raw.sort_list_data
+
+        var apphost: String? = Freak.getConfiguration(ConfigKey.API_HOST.name) as String?
+        var sort_list_url: String = apphost + "sort_list_data"
+        var sort_list_data: Int = R.raw.sort_list_data
+
+        var sort_content_list_url: String = apphost + "sort_content_list"
+        val sort_content_list_data: Int = R.raw.sort_content_data
+
+        val debugMap =
+            mapOf(sort_list_url to sort_list_data, sort_content_list_url to sort_content_list_data)
+
+
     }
 
 
@@ -24,8 +35,8 @@ class DebugInterceptor(
         val url = chain.request().url().toString()
         if (url.contains(DEBUG_URL)) {
             return debugResponse(chain, DEBUG_RAW_ID)
-        } else if (url.contains(sort_list_url)) {
-            return debugResponse(chain, sort_list_data)
+        } else if (debugMap.containsKey(url)) {
+            return debugResponse(chain, debugMap[url] ?: -1)
         }
 
         return chain.proceed(chain.request())
