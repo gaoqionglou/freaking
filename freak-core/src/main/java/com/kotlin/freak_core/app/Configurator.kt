@@ -2,6 +2,8 @@ package com.kotlin.freak_core.app
 
 import com.joanzapata.iconify.IconFontDescriptor
 import com.joanzapata.iconify.Iconify
+import com.kotlin.freak_core.delegates.web.event.Event
+import com.kotlin.freak_core.delegates.web.event.EventManager
 import okhttp3.Interceptor
 import java.util.*
 
@@ -46,6 +48,16 @@ object Configurator {
             INTERCEPTORS
         return this
 
+    }
+
+    fun withJavaScriptInterface(name: String): Configurator {
+        FREAK_CONFIGS[ConfigKey.JAVASCRIPT_INTERFACE.name] = name
+        return this
+    }
+
+    fun withWebEvent(name: String, event: Event): Configurator {
+        EventManager.addEvent(name, event)
+        return this
     }
 
     private fun initIcons() {

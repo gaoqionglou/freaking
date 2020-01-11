@@ -3,9 +3,9 @@ package com.kotlin.freak_core.delegates.web.route
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.webkit.URLUtil
 import android.webkit.WebView
 import androidx.core.content.ContextCompat
-import com.kotlin.freak_core.delegates.FreakDelegate
 import com.kotlin.freak_core.delegates.web.WebDelegate
 import com.kotlin.freak_core.delegates.web.WebDelegateImpl
 
@@ -21,14 +21,12 @@ object Router {
             return true
         }
 
-        val parentDelegate: FreakDelegate? = delegate.getParentDelegate()
-        val webDelegate: WebDelegateImpl = WebDelegateImpl.create(url)
-        if (parentDelegate == null) {
-            delegate.start(webDelegate)
-        } else {
-            parentDelegate.start(webDelegate)
-        }
+        val topDelegate = delegate.mTopDelegate
 
+
+        val webDelegate: WebDelegateImpl = WebDelegateImpl.create(url)
+
+        topDelegate?.start(webDelegate)
         return true
     }
 
@@ -37,11 +35,24 @@ object Router {
         webView?.loadUrl(url)
     }
 
-    private fun loadLocalPage(webView: WebView?, url: String) {
-        loadWebPage(webView, "file:///android_assets/$url")
+    fun loadPage(webView: WebView?, url: String) {
+        if (URLUtil.isNetworkUrl(url) || URLUtil.isAssetUrl(url)) {
+            loadWebPage(webView, url)
+        } else {
+            loadLocalPage(webView, url)
+        }
     }
 
-    private fun callPhone(context: Context, uri: String) {
+    fun loadPage(webDelegate: WebDelegate, url: String) {
+        loadPage(webDelegate.mWebView, url)
+
+    }
+
+    private fun loadLocalPage(webView: WebView?, url: String) {
+        loadWebPage(webView, "file:///android_asset/$url")
+    }
+
+    private fun callPhone(context: Context, uri: String?) {
         val intent = Intent(Intent.ACTION_DIAL)
         val data = Uri.parse(uri)
         intent.data = data

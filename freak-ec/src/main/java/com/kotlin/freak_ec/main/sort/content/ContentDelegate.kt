@@ -5,12 +5,14 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import butterknife.BindView
+
 import com.kotlin.freak_core.delegates.FreakDelegate
 import com.kotlin.freak_core.net.RestClient
 import com.kotlin.freak_core.net.callback.ISuccess
 import com.kotlin.freak_core.net.interceptors.DebugInterceptor
 import com.kotlin.freak_ec.R
 import com.kotlin.freak_ec.R2
+
 
 class ContentDelegate : FreakDelegate() {
 

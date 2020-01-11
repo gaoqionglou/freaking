@@ -5,8 +5,8 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 
 interface IWebViewInitializer {
-    fun initWebView(): WebView
-    fun initWebViewClient(): WebViewClient
-    fun initWebViewChromeClient(): WebChromeClient
+    fun initWebView(webView: WebView?): WebView
+    fun initWebViewClient(): WebViewClient?
+    fun initWebViewChromeClient(): WebChromeClient?
 
 }
