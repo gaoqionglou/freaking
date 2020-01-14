@@ -12,7 +12,7 @@ import com.kotlin.freak_core.net.interceptors.DebugInterceptor
 import com.kotlin.freak_ec.database.DataBaseManager
 
 class FreakApp : Application() {
-    val TAG = "FreakApp";
+    val TAG = "FreakApp"
 
     init {
         Log.i(TAG, " app init")
@@ -24,7 +24,7 @@ class FreakApp : Application() {
             .withApiHost("https://127.0.0.1/")
             .withIcon(FontEcModule())
             .withIcon(FontAwesomeModule())
-            .withInterceptor(DebugInterceptor("index", R.raw.index))
+            .withInterceptor(DebugInterceptor("index", R.raw.index2))
             .withWebEvent("test", TestEvent())
             .withJavaScriptInterface("Freak")
             .configure()

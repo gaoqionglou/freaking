@@ -20,6 +20,7 @@ import com.kotlin.freak_core.net.interceptors.DebugInterceptor
 import com.kotlin.freak_core.ui.recycler.MultipleItemEntity
 import com.kotlin.freak_ec.R
 import com.kotlin.freak_ec.R2
+import com.kotlin.freak_ec.pay.FastPay
 
 class ShopCartDelegate : BottomItemDelegate(), ICartItemListener {
 
@@ -59,6 +60,9 @@ class ShopCartDelegate : BottomItemDelegate(), ICartItemListener {
     @JvmField
     var tvTotalPrice: AppCompatTextView? = null
 
+    @BindView(R2.id.tv_shop_cart_pay)
+    @JvmField
+    var tvPay: AppCompatTextView? = null
 
     @OnClick(R2.id.icon_shop_cart_select_all)
     fun onClickSelectAll() {
@@ -130,6 +134,15 @@ class ShopCartDelegate : BottomItemDelegate(), ICartItemListener {
         mAdapter?.data?.clear()
         mAdapter?.notifyDataSetChanged()
         checkItemCount()
+    }
+
+    @OnClick(R2.id.tv_shop_cart_pay)
+    fun onClickPay() {
+        FastPay.create(this).beginPayDialog()
+    }
+
+    fun createOrder() {
+
     }
 
     fun checkItemCount() {

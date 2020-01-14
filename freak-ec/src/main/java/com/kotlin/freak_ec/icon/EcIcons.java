@@ -4,7 +4,7 @@ import com.joanzapata.iconify.Icon;
 
 
 public enum EcIcons implements Icon {
-    icon_animal_1('\ue629'),icon_animal_2('\uec89'),icon_scan('\ue6dd');
+    icon_animal_1('\ue629'), icon_animal_2('\uec89'), icon_scan('\ue6dd'), icon_alipay('\ue634');
 
     private  char character;
 
