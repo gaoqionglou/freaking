@@ -95,11 +95,17 @@ class ShopCartDelegate : BottomItemDelegate() {
                 removePosition = entityPosistion
             }
             if (removePosition <= mAdapter?.itemCount ?: 0) {
+                if (removePosition == mAdapter?.itemCount ?: 0) {
+                    removePosition = (mAdapter?.itemCount ?: 0) - 1
+                }
+                //adapter 的data移除掉这个
                 mAdapter?.remove(removePosition)
                 mCurrentCount = mAdapter?.itemCount ?: 0
                 //更新数据
                 mAdapter?.notifyItemChanged(removePosition, mAdapter?.itemCount)
             }
+            mCurrentCount = mAdapter?.itemCount ?: 0
+            mTotalCount = mAdapter?.itemCount ?: 0
         }
 
     }
