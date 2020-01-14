@@ -9,6 +9,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.joanzapata.iconify.widget.IconTextView
 import com.kotlin.freak_core.app.Freak
+import com.kotlin.freak_core.net.RestClient
+import com.kotlin.freak_core.net.callback.ISuccess
+import com.kotlin.freak_core.net.interceptors.DebugInterceptor
 import com.kotlin.freak_core.ui.recycler.MultipleItemEntity
 import com.kotlin.freak_core.ui.recycler.MultipleRecyclerAdapter
 import com.kotlin.freak_core.ui.recycler.MultipleViewHolder
@@ -20,6 +23,9 @@ class ShopCartAdapter(data: ArrayList<MultipleItemEntity>?) : MultipleRecyclerAd
 
     var isSelectedAll = false
 
+    var cartItemListener: ICartItemListener? = null
+
+    var mTotalPrice: Double = 0.0
 
     companion object {
         val OPTIONS = RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL)
@@ -28,10 +34,22 @@ class ShopCartAdapter(data: ArrayList<MultipleItemEntity>?) : MultipleRecyclerAd
     }
 
     init {
+        val size = data?.size ?: 0
+        for (i in 0 until size) {
+            val a = data?.get(i)
+            val price: Double = a?.getField(ShopCartItemFields.PRICE) ?: 0.0
+            val count: Int = a?.getField(ShopCartItemFields.COUNT) ?: 0
+            val total = price * count.toDouble()
+            mTotalPrice += total
+        }
         //添加购物车item布局
         addItemType(ShopCartItemType.SHOP_CART_ITEM, R.layout.item_shop_cart)
     }
 
+
+    fun getTotalPrice(): Double {
+        return mTotalPrice
+    }
 
     override fun convert(helper: MultipleViewHolder, item: MultipleItemEntity?) {
         super.convert(helper, item)
@@ -92,6 +110,46 @@ class ShopCartAdapter(data: ArrayList<MultipleItemEntity>?) : MultipleRecyclerAd
                         )
                         item.setField(ShopCartItemFields.IS_SELECTED, true)
                     }
+                }
+                //添加加减事件
+                iconMinus.setOnClickListener {
+                    val currentCount: Int = item.getField(ShopCartItemFields.COUNT)
+
+                    if (tvCount.text.toString().toInt() > 1) {
+                        RestClient.builder()
+                            .url(DebugInterceptor.shop_cart_data_url)
+                            .loader(context)
+                            .params("count", currentCount)
+                            .success(object : ISuccess {
+                                override fun onSuccess(response: String?) {
+                                    var countNum = tvCount.text.toString().toInt()
+                                    countNum--
+                                    tvCount.text = countNum.toString()
+                                    mTotalPrice -= price
+                                    cartItemListener?.onItemClick(mTotalPrice)
+                                }
+                            }).build().post()
+
+                    }
+                }
+
+                iconPlus.setOnClickListener {
+                    val currentCount: Int = item.getField(ShopCartItemFields.COUNT)
+                    RestClient.builder()
+                        .url(DebugInterceptor.shop_cart_data_url)
+                        .loader(context)
+                        .params("count", currentCount)
+                        .success(object : ISuccess {
+                            override fun onSuccess(response: String?) {
+                                var countNum = tvCount.text.toString().toInt()
+                                countNum++
+                                tvCount.text = countNum.toString()
+                                mTotalPrice += price
+                                cartItemListener?.onItemClick(mTotalPrice)
+                            }
+                        }).build().post()
+
+
                 }
 
             }

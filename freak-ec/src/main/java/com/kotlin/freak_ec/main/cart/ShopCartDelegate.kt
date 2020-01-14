@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.view.ViewStub
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,7 +21,8 @@ import com.kotlin.freak_core.ui.recycler.MultipleItemEntity
 import com.kotlin.freak_ec.R
 import com.kotlin.freak_ec.R2
 
-class ShopCartDelegate : BottomItemDelegate() {
+class ShopCartDelegate : BottomItemDelegate(), ICartItemListener {
+
 
 
     private val SELECTED_ALL = 1
@@ -45,6 +48,16 @@ class ShopCartDelegate : BottomItemDelegate() {
     @BindView(R2.id.tv_top_shop_cart_clear)
     @JvmField
     var tvClear: AppCompatTextView? = null
+
+
+    @BindView(R2.id.stub_no_item)
+    @JvmField
+    var mStubNoItem: ViewStub? = null
+
+
+    @BindView(R2.id.tv_shop_cart_total_price)
+    @JvmField
+    var tvTotalPrice: AppCompatTextView? = null
 
 
     @OnClick(R2.id.icon_shop_cart_select_all)
@@ -107,6 +120,7 @@ class ShopCartDelegate : BottomItemDelegate() {
             mCurrentCount = mAdapter?.itemCount ?: 0
             mTotalCount = mAdapter?.itemCount ?: 0
         }
+        checkItemCount()
 
     }
 
@@ -115,6 +129,22 @@ class ShopCartDelegate : BottomItemDelegate() {
     fun onClickClear() {
         mAdapter?.data?.clear()
         mAdapter?.notifyDataSetChanged()
+        checkItemCount()
+    }
+
+    fun checkItemCount() {
+        val itemCount = mAdapter?.itemCount ?: 0
+        if (itemCount == 0) {
+            val stubView: View? = mStubNoItem?.inflate()
+            val tvToBuy: AppCompatTextView? = stubView?.findViewById(R.id.tv_stub_to_buy)
+            tvToBuy?.setOnClickListener {
+                Toast.makeText(context, "你该购物啦", Toast.LENGTH_SHORT).show()
+            }
+            mRecyclerView?.visibility = View.GONE
+        } else {
+            mRecyclerView?.visibility = View.VISIBLE
+
+        }
     }
 
 
@@ -136,10 +166,20 @@ class ShopCartDelegate : BottomItemDelegate() {
                     val linearLayoutManager = LinearLayoutManager(context)
                     mRecyclerView?.layoutManager = linearLayoutManager
                     mAdapter = ShopCartAdapter(data)
+                    mAdapter?.cartItemListener = this@ShopCartDelegate
                     mRecyclerView?.adapter = mAdapter
+                    checkItemCount()
+                    val totalPrice = mAdapter?.getTotalPrice() ?: 0.0
+                    tvTotalPrice?.text = totalPrice.toString()
                 }
 
             }).build().get()
     }
 
+
+    override fun onItemClick(itemTotalPrice: Double) {
+
+        tvTotalPrice?.text = itemTotalPrice.toString()
+
+    }
 }
