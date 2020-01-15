@@ -119,7 +119,7 @@ class ShopCartAdapter(data: ArrayList<MultipleItemEntity>?) : MultipleRecyclerAd
                         RestClient.builder()
                             .url(DebugInterceptor.shop_cart_data_url)
                             .loader(context)
-                            .params("count", currentCount)
+//                            .params("count", currentCount) todo 导致分类接口获取失败??
                             .success(object : ISuccess {
                                 override fun onSuccess(response: String?) {
                                     var countNum = tvCount.text.toString().toInt()

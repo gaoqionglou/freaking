@@ -11,10 +11,13 @@ import com.joanzapata.iconify.widget.IconTextView
 import com.kotlin.freak_core.delegates.bottom.BottomItemDelegate
 import com.kotlin.freak_ec.R
 import com.kotlin.freak_ec.R2
+import com.kotlin.freak_ec.main.EcBottomDelegate
 import com.kotlin.freak_ec.main.personal.list.ListAdapter
 import com.kotlin.freak_ec.main.personal.list.ListBean
 import com.kotlin.freak_ec.main.personal.list.ListItemType
 import com.kotlin.freak_ec.main.personal.order.OrderListDelegate
+import com.kotlin.freak_ec.main.personal.profile.UserProfileDelegate
+import de.hdodenhof.circleimageview.CircleImageView
 
 class PersonalDelegate : BottomItemDelegate() {
 
@@ -33,6 +36,10 @@ class PersonalDelegate : BottomItemDelegate() {
     var iconArrowAll: IconTextView? = null
 
 
+    @BindView(R2.id.img_user_avatar)
+    @JvmField
+    var ivUserAvatar: CircleImageView? = null
+
     companion object {
         val ORDER_TYPE = "ORDER_TYPE"
     }
@@ -50,10 +57,17 @@ class PersonalDelegate : BottomItemDelegate() {
     }
 
 
+    @OnClick(R2.id.img_user_avatar)
+    fun onClickAvatar() {
+        val ecBottomDelegate = getParentDelegate<EcBottomDelegate>()
+        //由父delegate启动
+        ecBottomDelegate.start(UserProfileDelegate())
+    }
+
     fun startOrderListDelegateByType() {
         val orderListDelegate = OrderListDelegate()
         orderListDelegate.arguments = mArgs
-        start(orderListDelegate)
+        getParentDelegate<EcBottomDelegate>().start(orderListDelegate)
     }
 
     override fun onBindView(savedInstanceState: Bundle?, rootView: View) {
@@ -79,6 +93,8 @@ class PersonalDelegate : BottomItemDelegate() {
         val adapter = ListAdapter(beanList)
         rvSettings?.adapter = adapter
 
+
     }
+
 
 }
