@@ -27,10 +27,13 @@ class DebugInterceptor(
         var shop_cart_data_url: String = apphost + "shop_cart_data"
         val shop_cart_data: Int = R.raw.shop_cart_data
 
+        var order_list_data_url: String = apphost + "order_list_data"
+        val order_list_data: Int = R.raw.order_list_data
+
         val debugMap =
             mapOf(
                 sort_list_url to sort_list_data, sort_content_list_url to sort_content_list_data,
-                shop_cart_data_url to shop_cart_data
+                shop_cart_data_url to shop_cart_data, order_list_data_url to order_list_data
             )
 
 

@@ -1,0 +1,27 @@
+{
+  "code": 0,
+  "message": "OK",
+  "data": [
+    {
+      "id": 1,
+      "thumb": "http://ebuypic.csair.com/pic/data/16/DA/CkCXGl0eyDSAftY8AACqP6tkW7g576-180-180.jpg",
+      "title": "Aptamil爱他美进口白金版婴儿奶粉Pre段 800g*2",
+      "price": 490.00,
+      "time": "2020-1-1"
+    },
+    {
+      "id": 2,
+      "thumb": "http://ebuypic.csair.com/pic/data/25/E1/CkCXG13yCQuAKrweAADKDqTtZaY637-180-180.jpg",
+      "title": "8分钟急速 补水面膜＋美白面膜＋山羊奶面膜 （共24片）",
+      "price": 239.00,
+      "time": "2020-1-1"
+    },
+    {
+      "id": 3,
+      "thumb": "http://ebuypic.csair.com/pic/data/25/E1/CkCXG13yBzWAfoXJAABY1xn5Kq4749-180-180.jpg",
+      "title": "富安娜贵族混合鹅绒被203*229cm",
+      "price": 786.00,
+      "time": "2020-1-1"
+    }
+  ]
+}

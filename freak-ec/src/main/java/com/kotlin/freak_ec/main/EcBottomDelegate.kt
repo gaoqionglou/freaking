@@ -8,18 +8,19 @@ import com.kotlin.freak_core.delegates.bottom.ItemBuilder
 import com.kotlin.freak_ec.main.cart.ShopCartDelegate
 import com.kotlin.freak_ec.main.discover.DiscoverDelegate
 import com.kotlin.freak_ec.main.index.IndexDelegate
+import com.kotlin.freak_ec.main.personal.PersonalDelegate
 import com.kotlin.freak_ec.main.sort.SortDelegate
 
-class EcBottomDelegate  : BaseBottomDelegate(){
+class EcBottomDelegate : BaseBottomDelegate() {
 
     override fun setItems(builder: ItemBuilder): LinkedHashMap<BottomTabBean, BottomItemDelegate> {
         val items = LinkedHashMap<BottomTabBean, BottomItemDelegate>()
-        items[BottomTabBean("{fa-home}","主页")]= IndexDelegate()
-        items[BottomTabBean("{fa-sort}","分类")]=SortDelegate()
+        items[BottomTabBean("{fa-home}", "主页")] = IndexDelegate()
+        items[BottomTabBean("{fa-sort}", "分类")] = SortDelegate()
         items[BottomTabBean("{fa-compass}", "发现")] = DiscoverDelegate()
         items[BottomTabBean("{fa-shopping-cart}", "购物车")] = ShopCartDelegate()
-        items[BottomTabBean("{fa-user}","我的")]=IndexDelegate()
-        return builder.addItems (items).build()
+        items[BottomTabBean("{fa-user}", "我的")] = PersonalDelegate()
+        return builder.addItems(items).build()
     }
 
     override fun setIndexDelegate(): Int {
@@ -29,7 +30,6 @@ class EcBottomDelegate  : BaseBottomDelegate(){
     override fun setClickedColor(): Int {
         return Color.parseColor("#ffff8800")
     }
-
 
 
 }
