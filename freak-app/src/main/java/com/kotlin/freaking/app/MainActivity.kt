@@ -9,21 +9,20 @@ import com.kotlin.freak_ec.launcher.LauncherDelegate
 import com.kotlin.freak_ec.main.EcBottomDelegate
 import com.kotlin.freak_ec.sign.ISignLIstener
 import com.kotlin.freak_ec.sign.SignUpDelegate
-import com.kotlin.freaking.MainDelegate
 
 class MainActivity : ProxyActivity(), ISignLIstener, ILauncherListener {
     override fun onLauncherFinish(onLaucherFinishTag: OnLaucherFinishTag) {
         when (onLaucherFinishTag) {
             OnLaucherFinishTag.SIGNED -> {
-                Toast.makeText(
-                    this,
-                    "启动结束，用户登录了",
-                    Toast.LENGTH_LONG
-                ).show()
+//                Toast.makeText(
+//                    this,
+//                    "启动结束，用户登录了",
+//                    Toast.LENGTH_LONG
+//                ).show()
                 startWithPop(EcBottomDelegate())
             }
             OnLaucherFinishTag.NOTSIGNED -> {
-                Toast.makeText(this, "启动结束，用户未登录", Toast.LENGTH_LONG).show()
+//                Toast.makeText(this, "启动结束，用户未登录", Toast.LENGTH_LONG).show()
                 startWithPop(SignUpDelegate())
             }
         }
