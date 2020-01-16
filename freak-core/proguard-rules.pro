@@ -73,7 +73,13 @@
 -keep class com.google.gson.stream.** { *; }
 -keepattributes EnclosingMethod
 
+#ucrop混淆
+-dontwarn com.yalantis.ucrop**
+-keep class com.yalantis.ucrop** { *; }
+-keep interface com.yalantis.ucrop** { *; }
 
+#okhttp 第三方logger混淆
+-dontwarn com.parkingwang.okhttp3.LogInterceptor.formatter.*
 # Gson
 #-keep class com.example.testing.retrofitdemo.bean.**{*;} # 自定义数据模型的bean目录
 

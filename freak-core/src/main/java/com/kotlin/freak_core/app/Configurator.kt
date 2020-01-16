@@ -1,5 +1,6 @@
 package com.kotlin.freak_core.app
 
+import com.blankj.utilcode.util.Utils
 import com.joanzapata.iconify.IconFontDescriptor
 import com.joanzapata.iconify.Iconify
 import com.kotlin.freak_core.delegates.web.event.Event
@@ -21,6 +22,7 @@ object Configurator {
     fun configure() {
         FREAK_CONFIGS[ConfigKey.CONFIG_READY.name] = true
         initIcons()
+        Utils.init(Freak.getApplication())
     }
 
     fun withApiHost(host: String): Configurator {

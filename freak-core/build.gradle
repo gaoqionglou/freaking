@@ -86,8 +86,15 @@ dependencies {
     compileOnly 'com.android.support:multidex:1.2'
     annotationProcessor 'com.google.auto.value:auto-value:1.2'
 
-
+    api 'com.parkingwang:okhttp3-loginterceptor:latest.integration'
     api 'de.hdodenhof:circleimageview:3.0.1'
+    //图片剪裁
+    api 'com.github.yalantis:ucrop:2.2.2-native'
 
-
+    //动态权限处理
+    api('com.github.hotchemi:permissionsdispatcher:3.2.0') {
+        exclude module: 'support-v13'
+    }
+    kapt 'com.github.hotchemi:permissionsdispatcher-processor:3.2.0'
+    api 'com.blankj:utilcode:1.16.4'
 }

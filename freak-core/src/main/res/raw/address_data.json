@@ -1,0 +1,20 @@
+{
+  "code": 0,
+  "message": "OK",
+  "data": [
+    {
+      "id": 1,
+      "default": true,
+      "name": "宣陵doncts",
+      "phone": "8914658789",
+      "address": "广州市天河区珠江东路28号越秀金融大厦14楼09-16单元"
+    },
+    {
+      "id": 2,
+      "default": false,
+      "name": "江南佳人",
+      "phone": "8914658789",
+      "address": "广州市天河区天河东路67号丰兴广场"
+    }
+  ]
+}

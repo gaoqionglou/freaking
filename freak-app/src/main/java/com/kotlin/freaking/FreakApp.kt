@@ -10,6 +10,9 @@ import com.kotlin.freak_core.app.Freak
 import com.kotlin.freak_core.delegates.web.event.Event
 import com.kotlin.freak_core.net.interceptors.DebugInterceptor
 import com.kotlin.freak_ec.database.DataBaseManager
+import com.parkingwang.okhttp3.LogInterceptor.LogInterceptor
+
+
 
 class FreakApp : Application() {
     val TAG = "FreakApp"
@@ -25,6 +28,7 @@ class FreakApp : Application() {
             .withIcon(FontEcModule())
             .withIcon(FontAwesomeModule())
             .withInterceptor(DebugInterceptor("index", R.raw.index2))
+            .withInterceptor(LogInterceptor())
             .withWebEvent("test", TestEvent())
             .withJavaScriptInterface("Freak")
             .configure()

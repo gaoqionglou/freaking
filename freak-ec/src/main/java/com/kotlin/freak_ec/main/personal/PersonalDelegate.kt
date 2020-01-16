@@ -7,11 +7,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.OnClick
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.joanzapata.iconify.widget.IconTextView
 import com.kotlin.freak_core.delegates.bottom.BottomItemDelegate
 import com.kotlin.freak_ec.R
 import com.kotlin.freak_ec.R2
 import com.kotlin.freak_ec.main.EcBottomDelegate
+import com.kotlin.freak_ec.main.personal.address.AddressDelegate
 import com.kotlin.freak_ec.main.personal.list.ListAdapter
 import com.kotlin.freak_ec.main.personal.list.ListBean
 import com.kotlin.freak_ec.main.personal.list.ListItemType
@@ -19,7 +22,7 @@ import com.kotlin.freak_ec.main.personal.order.OrderListDelegate
 import com.kotlin.freak_ec.main.personal.profile.UserProfileDelegate
 import de.hdodenhof.circleimageview.CircleImageView
 
-class PersonalDelegate : BottomItemDelegate() {
+class PersonalDelegate : BottomItemDelegate(), OnItemClickListener {
 
 
     @BindView(R2.id.rv_personal_setting)
@@ -74,7 +77,7 @@ class PersonalDelegate : BottomItemDelegate() {
         val address = ListBean.Builder().setItemType(ListItemType.ITEM_NORMAL)
             .setId(1)
             .setText("收货地址")
-            .setDelegate(this)
+            .setDelegate(AddressDelegate())
             .build()
         val system = ListBean.Builder().setItemType(ListItemType.ITEM_NORMAL)
             .setId(2)
@@ -91,10 +94,23 @@ class PersonalDelegate : BottomItemDelegate() {
         val layoutmanager = LinearLayoutManager(context)
         rvSettings?.layoutManager = layoutmanager
         val adapter = ListAdapter(beanList)
+        adapter.setOnItemClickListener(this)
         rvSettings?.adapter = adapter
 
 
     }
 
+
+    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        val listAdapter = adapter as ListAdapter
+        val bean = listAdapter.data[position]
+        when (bean.id) {
+            1 -> {
+                getParentDelegate<EcBottomDelegate>().start(bean.delegate)
+            }
+            2 -> {
+            }
+        }
+    }
 
 }
