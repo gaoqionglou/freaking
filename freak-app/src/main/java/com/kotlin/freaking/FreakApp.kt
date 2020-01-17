@@ -10,9 +10,11 @@ import com.joanzapata.iconify.fonts.FontAwesomeModule
 import com.kotlin.freak_core.app.Freak
 import com.kotlin.freak_core.delegates.web.event.Event
 import com.kotlin.freak_core.net.interceptors.DebugInterceptor
+import com.kotlin.freak_core.util.callback.CallbackManager
+import com.kotlin.freak_core.util.callback.CallbackType
+import com.kotlin.freak_core.util.callback.IGlobalCallback
 import com.kotlin.freak_ec.database.DataBaseManager
 import com.parkingwang.okhttp3.LogInterceptor.LogInterceptor
-
 
 
 class FreakApp : Application() {
@@ -34,10 +36,33 @@ class FreakApp : Application() {
             .withJavaScriptInterface("Freak")
             .configure()
         DataBaseManager.init(this)
+
+
         //开启极光推送
         JPushInterface.setDebugMode(true)
-        JPushInterface.init(this)
+        JPushInterface.init(Freak.getApplication())
+
+
         Stetho.initializeWithDefaults(this)
+
+        CallbackManager.instance.addCallback(CallbackType.TAG_OPEN_PUSH,
+            object : IGlobalCallback<Any> {
+                override fun executeCallback(args: Any) {
+                    if (JPushInterface.isPushStopped(Freak.getApplication())) {
+                        //开启极光推送
+                        JPushInterface.setDebugMode(true)
+                        JPushInterface.init(Freak.getApplication())
+                    }
+                }
+
+            }).addCallback(CallbackType.TAG_STOP_PUSH, object : IGlobalCallback<Any> {
+            override fun executeCallback(args: Any) {
+                if (!JPushInterface.isPushStopped(Freak.getApplication())) {
+                    JPushInterface.stopPush(Freak.getApplication())
+                }
+            }
+
+        })
     }
 }
 

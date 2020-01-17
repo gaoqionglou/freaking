@@ -5,6 +5,8 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.kotlin.freak_core.delegates.FreakDelegate
 import com.kotlin.freak_core.net.RestClient
 import com.kotlin.freak_core.net.callback.ISuccess
@@ -13,7 +15,7 @@ import com.kotlin.freak_ec.R
 import com.kotlin.freak_ec.R2
 import com.kotlin.freak_ec.main.personal.PersonalDelegate
 
-class OrderListDelegate : FreakDelegate() {
+class OrderListDelegate : FreakDelegate(), OnItemClickListener {
 
 
     private var mType: String = ""
@@ -48,9 +50,16 @@ class OrderListDelegate : FreakDelegate() {
                     rvOrderList?.layoutManager = manager
                     val data = OrderListDataConverter().setJsonData(response).convert()
                     val adapter = OrderListAdapter(data)
+                    adapter.setOnItemClickListener(this@OrderListDelegate)
                     rvOrderList?.adapter = adapter
                 }
 
             }).build().post()
+    }
+
+    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        val listAdapter = adapter as OrderListAdapter
+        val bean = listAdapter.data[position]
+        start(OrderCommentDelegate())
     }
 }

@@ -20,6 +20,7 @@ import com.kotlin.freak_ec.main.personal.list.ListBean
 import com.kotlin.freak_ec.main.personal.list.ListItemType
 import com.kotlin.freak_ec.main.personal.order.OrderListDelegate
 import com.kotlin.freak_ec.main.personal.profile.UserProfileDelegate
+import com.kotlin.freak_ec.main.personal.settings.SettingsDelegate
 import de.hdodenhof.circleimageview.CircleImageView
 
 class PersonalDelegate : BottomItemDelegate(), OnItemClickListener {
@@ -82,7 +83,7 @@ class PersonalDelegate : BottomItemDelegate(), OnItemClickListener {
         val system = ListBean.Builder().setItemType(ListItemType.ITEM_NORMAL)
             .setId(2)
             .setText("系统设置")
-            .setDelegate(this)
+            .setDelegate(SettingsDelegate())
             .build()
 
 
@@ -109,6 +110,7 @@ class PersonalDelegate : BottomItemDelegate(), OnItemClickListener {
                 getParentDelegate<EcBottomDelegate>().start(bean.delegate)
             }
             2 -> {
+                getParentDelegate<EcBottomDelegate>().start(bean.delegate)
             }
         }
     }

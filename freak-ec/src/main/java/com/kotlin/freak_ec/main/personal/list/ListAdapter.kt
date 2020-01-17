@@ -1,5 +1,6 @@
 package com.kotlin.freak_ec.main.personal.list
 
+import androidx.appcompat.widget.SwitchCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -21,6 +22,7 @@ class ListAdapter(data: ArrayList<ListBean>) :
 
         addItemType(ListItemType.ITEM_NORMAL, R.layout.arrow_item_layout)
         addItemType(ListItemType.ITEM_AVATAR, R.layout.arrow_item_avatar)
+        addItemType(ListItemType.ITEM_SWITCH, R.layout.arrow_item_switch)
     }
 
     override fun convert(helper: BaseViewHolder, item: ListBean?) {
@@ -38,6 +40,14 @@ class ListAdapter(data: ArrayList<ListBean>) :
                     .into(helper.getView(R.id.img_arrow_avatar) as CircleImageView)
 
 
+            }
+
+            ListItemType.ITEM_SWITCH -> {
+
+                helper.setText(R.id.tv_arrow_switch_text, item?.text)
+                val switch = helper.getView<SwitchCompat>(R.id.list_item_switch)
+                switch.isChecked = true
+                switch.setOnCheckedChangeListener(item?.onCheckedChangeListener)
             }
         }
     }
