@@ -81,31 +81,37 @@ class DialogUtil {
         val etAddress =
             ll.findViewById<TextInputEditText>(R.id.dialog_address_adding_et_address)
 
-        AlertDialog.Builder(context)
+        val dialog = AlertDialog.Builder(context)
             .setTitle("添加地址")
             .setView(ll)
-            .setPositiveButton("确定", object : DialogInterface.OnClickListener {
-                override fun onClick(dialog: DialogInterface?, which: Int) {
-                    var isPass = checkForm(etName, etPhone, etAddress)
-
-
-                    if (isPass) {
-                        addressaddListener?.onAddressAdd(
-                            etName?.text?.trim().toString(),
-                            etPhone?.text?.trim().toString(),
-                            etAddress?.text?.trim().toString()
-                        )
-                    } else {
-
-                    }
-                }
-
-            }).setNegativeButton("取消", object : DialogInterface.OnClickListener {
+            .setCancelable(true)
+            .setPositiveButton("确定", null)
+            .setNegativeButton("取消", object : DialogInterface.OnClickListener {
                 override fun onClick(dialog: DialogInterface?, which: Int) {
 
                 }
 
-            }).show()
+            }).create()
+        dialog.show()
+
+        //dialog的按钮点击默认回消失，这样做为了不让按钮点击一下就消失
+//        为了防止 getButton() 为空,先show
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+            var isPass = checkForm(etName, etPhone, etAddress)
+
+
+            if (isPass) {
+                addressaddListener?.onAddressAdd(
+                    etName?.text?.trim().toString(),
+                    etPhone?.text?.trim().toString(),
+                    etAddress?.text?.trim().toString()
+                )
+                dialog.cancel()
+            } else {
+
+            }
+        }
+
 
     }
 
