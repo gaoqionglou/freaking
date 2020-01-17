@@ -4,6 +4,7 @@ import FontEcModule
 import android.app.Application
 import android.util.Log
 import android.widget.Toast
+import cn.jpush.android.api.JPushInterface
 import com.facebook.stetho.Stetho
 import com.joanzapata.iconify.fonts.FontAwesomeModule
 import com.kotlin.freak_core.app.Freak
@@ -33,6 +34,9 @@ class FreakApp : Application() {
             .withJavaScriptInterface("Freak")
             .configure()
         DataBaseManager.init(this)
+        //开启极光推送
+        JPushInterface.setDebugMode(true)
+        JPushInterface.init(this)
         Stetho.initializeWithDefaults(this)
     }
 }
