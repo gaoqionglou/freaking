@@ -220,6 +220,7 @@ class AutoPhotoLayout : LinearLayoutCompat {
         mHasInitOnLayout = false
     }
 
+    //图片回调 把选择好的图片或者照相设置进imageview
     fun onCropTarget(uri: Uri) {
         createNewImageView()
         Glide.with(context).load(uri).apply(OPTIONS).into(mTargetImageView as AppCompatImageView)
