@@ -52,13 +52,13 @@
             android:layout_toRightOf="@id/img_order_comment"
             android:text="评分"
             android:textColor="#323232" />
-        <!--
-                <com.guikai.latte.ui.widget.StarLayout
-                    android:id="@+id/custom_star_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@+id/tv_comment_title"
-                    android:layout_toRightOf="@id/img_order_comment" />-->
+
+        <com.kotlin.freak_ec.main.personal.order.widget.StarLayout
+            android:id="@+id/custom_star_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tv_comment_title"
+            android:layout_toRightOf="@id/img_order_comment" />
 
     </RelativeLayout>
 
@@ -71,13 +71,13 @@
         android:hint="写下评论"
         android:padding="10dp" />
 
-    <!--    <com.guikai.latte.ui.widget.AutoPhotoLayout
-            android:id="@+id/custom_auto_photo_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:icon_size="10sp"
-            app:item_margin="3"
-            app:line_count="5"
-            app:max_count="10"/>-->
+    <com.kotlin.freak_ec.main.personal.order.widget.AutoPhotoLayout
+        android:id="@+id/custom_auto_photo_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:icon_size="10sp"
+        app:item_margin="3"
+        app:line_count="5"
+        app:max_count="10" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
