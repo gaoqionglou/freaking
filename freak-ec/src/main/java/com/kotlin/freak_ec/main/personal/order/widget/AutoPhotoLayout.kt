@@ -197,6 +197,7 @@ class AutoPhotoLayout : LinearLayoutCompat {
             lineHeight = LINE_HEIGHTS.get(i)
             val linesize = mLineViews?.size ?: 0
             for (j in 0 until linesize) {
+                //遍历给当前这一行的子view 设置坐标 去排列布局
                 val child = mLineViews?.get(j)
                 if (child?.visibility == View.GONE) {
                     continue
@@ -210,6 +211,7 @@ class AutoPhotoLayout : LinearLayoutCompat {
                 child.layout(lc, tc, rc, bc)
                 left += child.measuredWidth + lp.leftMargin + lp.rightMargin
             }
+            //排列完一行子view之后恢复left top递加上一行的lineheight
             left = paddingLeft
             top += lineHeight
         }
