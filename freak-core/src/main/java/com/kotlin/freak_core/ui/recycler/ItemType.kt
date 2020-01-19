@@ -7,5 +7,6 @@ class ItemType {
         val TEXT_IMAGE = 3
         val BANNER = 4
         val VERTICAL_MENU_LIST = 5
+        val SINGLE_BIG_IMAGE = 6
     }
 }

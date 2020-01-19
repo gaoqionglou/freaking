@@ -23,6 +23,17 @@ object FreakPreference {
         return getAppPreference().getBoolean(key, false)
     }
 
+    fun addCustomAppProfile(key: String, value: String) {
+        getAppPreference()
+            .edit()
+            .putString(key, value)
+            .apply()
+    }
+
+    fun getCustomAppProfile(key: String): String? {
+        return getAppPreference().getString(key, "")
+    }
+
 }
 
 
