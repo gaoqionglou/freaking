@@ -4,9 +4,11 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.alibaba.fastjson.JSON
 import com.chad.library.adapter.base.listener.OnItemClickListener
+import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.kotlin.freak_core.app.Freak
 import com.kotlin.freak_core.net.RestClient
 import com.kotlin.freak_core.net.callback.ISuccess
+import com.kotlin.freak_core.net.interceptors.DebugInterceptor
 import com.kotlin.freak_core.ui.recycler.DataConverter
 import com.kotlin.freak_core.ui.recycler.MultipleRecyclerAdapter
 
@@ -16,7 +18,11 @@ class RefreshHandler(
     private val RECYCLERVIEW: RecyclerView?,
     private val BEAN: PagingBean
 ) :
-    SwipeRefreshLayout.OnRefreshListener {
+    SwipeRefreshLayout.OnRefreshListener
+    , OnLoadMoreListener {
+    override fun onLoadMore() {
+        pagging("index?index=")
+    }
 
 
     private var recyclerListOnItemClickListener: OnItemClickListener? = null
@@ -62,6 +68,7 @@ class RefreshHandler(
                         .setPageSzie(json.getInteger("page_size"))
                     mAdapter = MultipleRecyclerAdapter.create(CONVERTER?.setJsonData(response))
                     mAdapter?.setOnItemClickListener(recyclerListOnItemClickListener)
+                    mAdapter?.loadMoreModule?.setOnLoadMoreListener(this@RefreshHandler)
                     RECYCLERVIEW?.adapter = mAdapter
                     BEAN.addIndex()
                 }
@@ -92,4 +99,33 @@ class RefreshHandler(
         refresh()
     }
 
+
+    private fun pagging(url: String) {
+        val pageSize = BEAN.mPageSzie
+        val currentCount = BEAN.mCurrentCount
+        val total = BEAN.mTotal
+        val index = BEAN.mPageIndex
+        if (mAdapter?.data?.size ?: 0 < pageSize || currentCount >= total) {
+            mAdapter?.loadMoreModule?.loadMoreEnd(true)
+        } else {
+            Freak.getHandler().postDelayed(object : Runnable {
+                override fun run() {
+                    RestClient.builder()
+                        .url(DebugInterceptor.paging_data_url /*TODO 真实情况要 url+index*/)
+                        .success(object : ISuccess {
+                            override fun onSuccess(response: String?) {
+                                mAdapter?.addData(CONVERTER?.setJsonData(response)?.convert()!!)
+                                BEAN.setCurrentCount(mAdapter?.data?.size ?: 0)
+                                mAdapter?.loadMoreModule?.loadMoreComplete()
+                                BEAN.addIndex()
+                            }
+
+                        }).build()
+                        .get()
+
+                }
+
+            }, 1000)
+        }
+    }
 }

@@ -3,6 +3,7 @@ package com.kotlin.freak_ec.main.index
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -10,12 +11,16 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.BindView
+import butterknife.OnClick
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.joanzapata.iconify.widget.IconTextView
 import com.kotlin.freak_core.delegates.bottom.BottomItemDelegate
 import com.kotlin.freak_core.ui.recycler.BaseDecoration
 import com.kotlin.freak_core.ui.refresh.RefreshHandler
+import com.kotlin.freak_core.util.callback.CallbackManager
+import com.kotlin.freak_core.util.callback.CallbackType
+import com.kotlin.freak_core.util.callback.IGlobalCallback
 import com.kotlin.freak_ec.R
 import com.kotlin.freak_ec.R2
 import com.kotlin.freak_ec.detail.GoodsDetailDelegate
@@ -46,6 +51,12 @@ class IndexDelegate : BottomItemDelegate(), OnItemClickListener {
     var mSearchView: AppCompatEditText? = null
 
     private var mRefreshHandler: RefreshHandler? = null
+
+
+    @OnClick(R2.id.icon_index_scan)
+    fun onClickScan() {
+        startScanWithCheck(getParentDelegate())
+    }
 
     private fun initRefreshLayout() {
         mRefreshLayout?.setColorSchemeResources(
@@ -85,11 +96,22 @@ class IndexDelegate : BottomItemDelegate(), OnItemClickListener {
         mRefreshHandler =
             RefreshHandler.create(mRefreshLayout, mRecyclerView, IndexDataConverter())
         mRefreshHandler?.setListItemOnItemClickListener(this)
+
+
+        //添加扫描二维码的callback
+        CallbackManager.instance.addCallback(CallbackType.ON_SCAN,
+            object : IGlobalCallback<String> {
+                override fun executeCallback(args: String) {
+                    Toast.makeText(context, "qrCode:$args", Toast.LENGTH_SHORT).show()
+                }
+
+            })
     }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
         val ecBottomDelegate: EcBottomDelegate = getParentDelegate()
         ecBottomDelegate.start(GoodsDetailDelegate.create())
     }
+
 
 }

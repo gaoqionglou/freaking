@@ -9,13 +9,14 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.listener.GridSpanSizeLookup
+import com.chad.library.adapter.base.module.LoadMoreModule
 import com.kotlin.freak_core.R
 import com.kotlin.freak_core.ui.banner.BannerCreator
 
 
 open class MultipleRecyclerAdapter(data: ArrayList<MultipleItemEntity>?) :
     BaseMultiItemQuickAdapter<MultipleItemEntity, MultipleViewHolder>(data), GridSpanSizeLookup,
-    OnItemClickListener {
+    OnItemClickListener, LoadMoreModule {
 
     init {
         init()

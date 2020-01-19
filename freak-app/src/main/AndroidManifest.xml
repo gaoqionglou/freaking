@@ -6,6 +6,10 @@
 
     <dist:module dist:instant="true" />
 
+    <!-- 相机 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+
     <!-- Required -->
     <uses-permission android:name="com.kotlin.freaking.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />

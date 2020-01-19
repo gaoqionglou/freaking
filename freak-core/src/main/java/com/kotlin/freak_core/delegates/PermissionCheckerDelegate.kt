@@ -6,6 +6,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
+import com.kotlin.freak_core.delegates.scanner.ScannerDelegate
 import com.kotlin.freak_core.util.callback.CallbackManager
 import com.kotlin.freak_core.util.callback.CallbackType
 import com.kotlin.freak_core.util.callback.IGlobalCallback
@@ -31,6 +32,18 @@ abstract class PermissionCheckerDelegate : BaseDelegate() {
         FreakCamera.start(this)
     }
 
+    @NeedsPermission(
+        Manifest.permission.CAMERA,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.READ_EXTERNAL_STORAGE
+    )
+    fun startScan(delegate: FreakDelegate) {
+        delegate.startForResult(ScannerDelegate(), RequestCodes.SCAN)
+    }
+
+    fun startScanWithCheck(delegate: FreakDelegate) {
+        startScanWithPermissionCheck(delegate)
+    }
 
     fun startCameraWithCheck() {
         //调用自动生成的方法 ->PermissionCheckerDelegatePermissionsDispatcher.startCameraWithPermissionCheck
@@ -117,4 +130,15 @@ abstract class PermissionCheckerDelegate : BaseDelegate() {
             }
         }
     }
+
+//    override fun onFragmentResult(requestCode: Int, resultCode: Int, data: Bundle?) {
+//        super.onFragmentResult(requestCode, resultCode, data)
+//        if (requestCode == RequestCodes.SCAN) {
+//            val qrCode = data?.getString("SCAN_RESULT")
+//            val callback =
+//                CallbackManager.instance.getCallback(CallbackType.ON_SCAN) as IGlobalCallback<String>?
+//            callback?.executeCallback(qrCode ?: "")
+//
+//        }
+//    }
 }

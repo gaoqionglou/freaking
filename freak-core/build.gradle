@@ -96,5 +96,11 @@ dependencies {
         exclude module: 'support-v13'
     }
     kapt 'com.github.hotchemi:permissionsdispatcher-processor:3.2.0'
+    //第三方常用工具类库
     api 'com.blankj:utilcode:1.16.4'
+
+    //二维码扫描
+    api('me.dm7.barcodescanner:zbar:1.9.8') {
+        exclude group: 'com.android.support'
+    }
 }
