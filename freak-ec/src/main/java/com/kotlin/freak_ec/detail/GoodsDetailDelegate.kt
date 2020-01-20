@@ -1,5 +1,6 @@
 package com.kotlin.freak_ec.detail
 
+import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -11,9 +12,14 @@ import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import butterknife.BindView
+import butterknife.OnClick
 import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.JSONObject
 import com.bigkoo.convenientbanner.ConvenientBanner
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
+import com.daimajia.androidanimations.library.YoYo
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.tabs.TabLayout
@@ -25,8 +31,12 @@ import com.kotlin.freak_core.net.callback.ISuccess
 import com.kotlin.freak_core.ui.banner.HolderCreator
 import com.kotlin.freak_ec.R
 import com.kotlin.freak_ec.R2
+import com.kotlin.freak_ec.animation.BezierAnimation
+import com.kotlin.freak_ec.animation.BezierUtil
+import de.hdodenhof.circleimageview.CircleImageView
 
-class GoodsDetailDelegate : FreakDelegate(), AppBarLayout.OnOffsetChangedListener {
+class GoodsDetailDelegate : FreakDelegate(), AppBarLayout.OnOffsetChangedListener,
+    BezierUtil.AnimationListener {
 
 
     @BindView(R2.id.app_bar_detail)
@@ -66,10 +76,26 @@ class GoodsDetailDelegate : FreakDelegate(), AppBarLayout.OnOffsetChangedListene
     @JvmField
     var mGoodsInfo: FrameLayout? = null
 
+
+    @BindView(R2.id.tv_shopping_cart_amount)
+    @JvmField
+    var mCircleTextViewShopCartAmount: CircleTextView? = null
+
+
+    @BindView(R2.id.icon_shop_cart)
+    @JvmField
+    var mIconShopCart: IconTextView? = null
     var mGoodsId: Int? = -1
+
+    var mGoodsThumbUrl: String? = null
+    var mShopCount: Int = 0
 
     companion object {
         val ARG_GOODS_ID: String = "ARG_GOODS_ID"
+        val OPTIONS = RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL)
+            .placeholder(R.drawable.img_quexing)
+            .error(R.drawable.img_quexing).dontAnimate().override(100, 100)
+
         fun create(goodsId: Int): GoodsDetailDelegate {
             val args = Bundle()
             args.putInt(ARG_GOODS_ID, goodsId)
@@ -79,6 +105,22 @@ class GoodsDetailDelegate : FreakDelegate(), AppBarLayout.OnOffsetChangedListene
         }
     }
 
+
+    @OnClick(R2.id.rl_add_shop_cart)
+    fun onClickAddShopCart() {
+        val animImage = CircleImageView(context)
+        Glide.with(context as Context).load(mGoodsThumbUrl).apply(OPTIONS).into(animImage)
+        BezierAnimation.addCart(this, mRlAddShopCart, mIconShopCart, animImage, this)
+    }
+
+
+    fun setShopCount(data: JSONObject) {
+        mGoodsThumbUrl = data.getString("thumb")
+        if (mShopCount == 0) {
+            mCircleTextViewShopCartAmount?.visibility = View.GONE
+        }
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,6 +137,7 @@ class GoodsDetailDelegate : FreakDelegate(), AppBarLayout.OnOffsetChangedListene
     override fun onBindView(savedInstanceState: Bundle?, rootView: View) {
         mCollapsingToolbarLayout?.setContentScrimColor(Color.WHITE)
         mAppBarLayout?.addOnOffsetChangedListener(this)
+        mCircleTextViewShopCartAmount?.setCircleBackground(Color.RED)
         initData()
         initTabLayout()
     }
@@ -110,6 +153,7 @@ class GoodsDetailDelegate : FreakDelegate(), AppBarLayout.OnOffsetChangedListene
                     initBanner(data)
                     initGoodsInfo(data)
                     initPager(data)
+                    setShopCount(data)
                 }
 
             }).build().get()
@@ -157,5 +201,14 @@ class GoodsDetailDelegate : FreakDelegate(), AppBarLayout.OnOffsetChangedListene
 
     override fun onOffsetChanged(p0: AppBarLayout?, verticalOffset: Int) {
 
+    }
+
+    override fun onAnimationEnd() {
+        YoYo.with(ScaleUpAnimatior())
+            .duration(500)
+            .playOn(mIconShopCart)
+        mShopCount++
+        mCircleTextViewShopCartAmount?.visibility = View.VISIBLE
+        mCircleTextViewShopCartAmount?.text = mShopCount.toString()
     }
 }
