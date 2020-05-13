@@ -36,11 +36,16 @@ class DebugInterceptor(
 
         var paging_data_url: String = apphost + "index?index"
         val paging_data: Int = R.raw.index
+
+        var disocver_food_url: String = apphost + "food"
+        val disocver_food_data: Int = R.raw.food_list_data
+
         val debugMap =
             mapOf(
                 sort_list_url to sort_list_data, sort_content_list_url to sort_content_list_data,
                 shop_cart_data_url to shop_cart_data, order_list_data_url to order_list_data,
-                address_data_url to address_data, paging_data_url to paging_data
+                address_data_url to address_data, paging_data_url to paging_data,
+                disocver_food_url to disocver_food_data
             )
 
 

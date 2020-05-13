@@ -1,0 +1,30 @@
+{
+  "code": 0,
+  "message": "OK",
+  "data": [
+    {
+      "id": 1,
+      "imageUrl": "http://img3.imgtn.bdimg.com/it/u=729293723,2682130353&fm=214&gp=0.jpg",
+      "title": "麦当劳",
+      "address": "仑头路21号",
+      "tel": "02086111312",
+      "commentCount": "21"
+    },
+    {
+      "id": 2,
+      "imageUrl": "http://img1.imgtn.bdimg.com/it/u=546357726,2250851461&fm=26&gp=0.jpg",
+      "title": "KFC",
+      "tel": "0208667312",
+      "address": "天河路21号",
+      "commentCount": "222"
+    },
+    {
+      "id": 3,
+      "imageUrl": "http://img5.imgtn.bdimg.com/it/u=3017900658,4277139813&fm=26&gp=0.jpg",
+      "title": "Hungry jack",
+      "tel": "0208619012",
+      "address": "北京路21号",
+      "commentCount": "322"
+    }
+  ]
+}

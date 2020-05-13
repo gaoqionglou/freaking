@@ -2,16 +2,30 @@ package com.kotlin.freak_ec.main.discover
 
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import butterknife.BindView
 import com.kotlin.freak_core.delegates.bottom.BottomItemDelegate
-import com.kotlin.freak_core.delegates.web.WebDelegateImpl
+import com.kotlin.freak_core.net.RestClient
+import com.kotlin.freak_core.net.callback.ISuccess
+import com.kotlin.freak_core.net.interceptors.DebugInterceptor
 import com.kotlin.freak_ec.R
+import com.kotlin.freak_ec.R2
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator
 import me.yokeyword.fragmentation.anim.FragmentAnimator
 
 class DiscoverDelegate : BottomItemDelegate() {
+
+    @BindView(R2.id.rv_discover)
+    @JvmField
+    var mRecyclerView: RecyclerView? = null
+
+    private var mAdapter: DiscoverFoodAdapter? = null
+
     override fun setLayout(): Any {
-        return R.layout.delegate_discover
+        return R.layout.delegate_discover_food
     }
+
 
     override fun onBindView(savedInstanceState: Bundle?, rootView: View) {
 
@@ -20,9 +34,17 @@ class DiscoverDelegate : BottomItemDelegate() {
 
     override fun onLazyInitView(savedInstanceState: Bundle?) {
         super.onLazyInitView(savedInstanceState)
-        val delegate = WebDelegateImpl.create("index.html")
-        delegate.setTopDelegate(this.getParentDelegate())
-        loadRootFragment(R.id.web_discovery_container, delegate)
+        RestClient.builder().url(DebugInterceptor.disocver_food_url).loader(context)
+            .success(object : ISuccess {
+                override fun onSuccess(response: String?) {
+                    val data = FoodDataConverter().setJsonData(response).convert()
+                    val linearLayoutManager = LinearLayoutManager(context)
+                    mRecyclerView?.layoutManager = linearLayoutManager
+                    mAdapter = DiscoverFoodAdapter(data)
+                    mRecyclerView?.adapter = mAdapter
+                }
+
+            }).build().get()
     }
 
     override fun onCreateFragmentAnimator(): FragmentAnimator {
