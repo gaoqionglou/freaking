@@ -5,16 +5,20 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.kotlin.freak_core.delegates.bottom.BottomItemDelegate
 import com.kotlin.freak_core.net.RestClient
 import com.kotlin.freak_core.net.callback.ISuccess
 import com.kotlin.freak_core.net.interceptors.DebugInterceptor
 import com.kotlin.freak_ec.R
 import com.kotlin.freak_ec.R2
+import com.kotlin.freak_ec.main.EcBottomDelegate
+import com.kotlin.freak_ec.main.personal.order.OrderCommentDelegate
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator
 import me.yokeyword.fragmentation.anim.FragmentAnimator
 
-class DiscoverDelegate : BottomItemDelegate() {
+class DiscoverDelegate : BottomItemDelegate(), OnItemClickListener {
 
     @BindView(R2.id.rv_discover)
     @JvmField
@@ -41,6 +45,7 @@ class DiscoverDelegate : BottomItemDelegate() {
                     val linearLayoutManager = LinearLayoutManager(context)
                     mRecyclerView?.layoutManager = linearLayoutManager
                     mAdapter = DiscoverFoodAdapter(data)
+                    mAdapter?.setOnItemClickListener(this@DiscoverDelegate)
                     mRecyclerView?.adapter = mAdapter
                 }
 
@@ -49,5 +54,11 @@ class DiscoverDelegate : BottomItemDelegate() {
 
     override fun onCreateFragmentAnimator(): FragmentAnimator {
         return DefaultHorizontalAnimator()
+    }
+
+    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        val listAdapter = adapter as DiscoverFoodAdapter
+        val bean = listAdapter.data[position]
+        getParentDelegate<EcBottomDelegate>().start(OrderCommentDelegate())
     }
 }
